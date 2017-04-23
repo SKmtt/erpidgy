@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Uvodna stranka</h2>
+
+  <% @rooms.each do |room| %>
+
+      <%= link_to room.name, room.name %> <br>
+
+  <% end %>
+
+
+  <%= link_to 'Miestnosti', miestnosti_path %>
+
+</div>
