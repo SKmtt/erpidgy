@@ -11,8 +11,7 @@
 <body>
 
 
-<div class="container">
-  <div class="hidden-sm hidden-xs">
+  <div class="row hidden-sm hidden-xs" style="max-width:95%; margin: auto;">
     <% if user_signed_in? %>
 
 
@@ -32,16 +31,32 @@
           <li><a href="<%= new_user_session_path %>" class="btn btn-default btn-lg" role="button"> Prihlasenie </a></li>
         </ul>
     <% end %>
-    <!--<p class="notice"><%= notice %></p>-->
-    <!--<p class="alert"><%= alert %></p>-->
   </div>
-</div>
 
+  <div class="row" style="max-width:95%; margin:auto;">
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
+      <br>
+      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
+      <br>
+      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
+      <br>
+      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
+    </div>
 
-    <%= yield %>
+    <div class="col-lg-10 col-md-10 col-sm-10">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+
+      <%= yield %>
+    </div>
+  </div>
 
 </body>
 </html>

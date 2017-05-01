@@ -1,2 +1,23 @@
-<h1>Room#index</h1>
-<p>Find me in app/views/room/index.html.erb</p>
+<h4>Miestnosti:</h4>
+<% @rooms.each do |room| %>
+
+    <%= link_to room.name, 'miestnost/'+room.parametrized %> <br>
+
+<% end %>
+</br></br>
+
+<h4>Nova miestnost:</h4>
+<%= form_for :room do |f| %>
+
+    <%= f.label :name %></br>
+    <%=  f.text_field :name %></br>
+    </br>
+
+    <%= f.label :description %></br>
+    <%=  f.text_field :description %></br>
+    </br>
+
+    <%= f.submit %>
+
+<% end %>
+

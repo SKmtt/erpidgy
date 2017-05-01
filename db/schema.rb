@@ -10,16 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423142056) do
+ActiveRecord::Schema.define(version: 20170501174428) do
+
+  create_table "characters", force: :cascade do |t|
+    t.string  "name"
+    t.string  "surname"
+    t.text    "description"
+    t.date    "birth"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_characters_on_user_id"
+  end
 
   create_table "replies", force: :cascade do |t|
     t.text     "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "room_id"
+    t.integer  "character_id"
+    t.index ["character_id"], name: "index_replies_on_character_id"
     t.index ["room_id"], name: "index_replies_on_room_id"
-    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -28,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170423142056) do
     t.string   "resources_url"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "parametrized"
   end
 
   create_table "users", force: :cascade do |t|

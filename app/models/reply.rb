@@ -1,3 +1,3 @@
 class Reply < ApplicationRecord
-  belongs_to :user, :room
+  belongs_to :character, :room
 end

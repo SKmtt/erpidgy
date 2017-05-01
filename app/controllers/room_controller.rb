@@ -2,16 +2,22 @@ class RoomController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @rooms = Room.all
   end
 
   def show
-    @room = Room.where(:name => params[:id]).first
+    @room = Room.where(:parametrized => params[:id]).first
+    if @room.nil?
+      redirect_to domov_path
+    end
   end
 
   def create
-  end
+    @room = Room.new(permit_room)
+    @room.parametrized = @room.name.parameterize('_')
+    @room.save
 
-  def new
+    redirect_to miestnosti_path
   end
 
   def edit
@@ -19,4 +25,11 @@ class RoomController < ApplicationController
 
   def destroy
   end
+
+private
+
+  def permit_room
+    params.require(:room).permit(:name, :description)
+  end
+
 end
