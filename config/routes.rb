@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   #upravit / rozbit na mensie nech sa nebije s root
   #resources :room, path: '/'
 
-  resources :character, path: ''
+  resources :users, only: [:show], path: 'pouzivatel'
 
   get 'miestnosti' => 'room#index'
   post 'miestnosti' => 'room#create'

@@ -1,13 +1,26 @@
 <div class="container">
+
   <h2>Uvodna stranka</h2>
 
-  <% @rooms.each do |room| %>
+  <div class="jumbotron col-lg-10 col-md-10 col-sm-10 col-xs-3">
+    <% @rooms.each do |room| %>
 
-      <%= link_to room.name, 'miestnost/'+room.parametrized %> <br>
+        <%= link_to room.name, 'miestnost/'+room.parametrized %> <br>
 
-  <% end %>
+    <% end %>
 
 
-  <%= link_to 'Miestnosti', miestnosti_path %>
+    <%= link_to 'Miestnosti', miestnosti_path %>
+
+  </div>
+
+  <div id="online-users" class="jumbotron col-lg-10 col-md-10 col-sm-10 col-xs-3" style="display: none">
+
+  </div>
 
 </div>
+
+<script type="text/javascript">
+    $('#online-users').html("<%= j (render 'online') %>");
+    $('#online-users').slideDown(350);
+</script>
