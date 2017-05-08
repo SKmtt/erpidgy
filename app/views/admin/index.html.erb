@@ -1,0 +1,15 @@
+<h1>Zoznam ziadosti o postavu:</h1>
+
+<div id="characters">
+  <% @characters.each do |f| %>
+
+      <div class="jumbotron" id="character-<%= f.id %>">
+        Ziadatel: <%= f.user.username %>
+        <p><%= f.name %> <%= f.surname %></p>
+        <%= f.description %>
+        <br><br>
+        <%= link_to 'Schvalit', character_path + '/' + f.id.to_s, :remote => true, :method => 'post', :class => "btn btn-default btn-circle btn-lg activate" %>
+      </div>
+
+  <% end %>
+</div>

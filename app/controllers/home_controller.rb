@@ -7,8 +7,5 @@ class HomeController < ApplicationController
     @users = User.all
   end
 
-  def _online
-    puts 'tusom'
-    @users = User.all
-  end
+
 end

@@ -1,6 +1,6 @@
-<h5>Online hraci</h5>
+<h5>Online hraci:</h5>
 <% @users.each do |f| %>
 
-    <%= link_to f.username, user_path(f) %>
+    <%= link_to f.username, users_path + '/' + f.username %>
 
 <% end %>

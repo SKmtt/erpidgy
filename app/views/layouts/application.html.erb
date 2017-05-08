@@ -11,52 +11,56 @@
 <body>
 
 
-  <div class="row hidden-sm hidden-xs" style="max-width:95%; margin: auto;">
-    <% if user_signed_in? %>
+<div class="row hidden-sm hidden-xs" style="max-width:95%; margin: auto;">
+  <% if user_signed_in? %>
 
 
-        <%= link_to 'Home', domov_path, :class => "btn btn-default btn-circle btn-lg" %>
-        <button type="button" class="btn btn-default btn-circle btn-lg"><i class="glyphicon glyphicon-eye-open"></i>
-        </button>
+      <%= link_to 'Domov', domov_path, :class => "btn btn-default btn-circle btn-lg" %>
+      <%= link_to 'Profil', users_path + '/' + current_user.username, :class => "btn btn-default btn-circle btn-lg" %>
+      <%= link_to '', admin_path, :class => "btn btn-default btn-circle btn-lg glyphicon glyphicon-eye-open" %>
 
-        Pouzivatel: <%= current_user.username %>
+      Pouzivatel: <%= current_user.username %>
 
-        <a rel="nofollow" data-method="delete" href="<%= destroy_user_session_path %>" class="btn btn-default btn-lg pull-right" role="button">
-          Odhlasit </a>
+      <a rel="nofollow" data-method="delete" href="<%= destroy_user_session_path %>" class="btn btn-default btn-lg pull-right" role="button">
+        Odhlasit </a>
 
-    <% else %>
-        <ul class="list-inline pull-right">
-          <li><a href="<%= new_user_registration_path %>" class="btn btn-default btn-lg" role="button"> Registracia </a>
-          </li>
-          <li><a href="<%= new_user_session_path %>" class="btn btn-default btn-lg" role="button"> Prihlasenie </a></li>
-        </ul>
-    <% end %>
-  </div>
+  <% else %>
+      <ul class="list-inline pull-right">
+        <li><a href="<%= new_user_registration_path %>" class="btn btn-default btn-lg" role="button"> Registracia </a>
+        </li>
+        <li><a href="<%= new_user_session_path %>" class="btn btn-default btn-lg" role="button"> Prihlasenie </a></li>
+      </ul>
+  <% end %>
+</div>
 
-  <div class="row" style="max-width:95%; margin:auto;">
+<div class="row" style="max-width:98%; margin:auto;">
 
-    <div class="col-lg-2 col-md-2 col-sm-2">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
-      <br>
-      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
-      <br>
-      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
-      <br>
-      <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
-    </div>
+  <% if user_signed_in? %>
+      <div class="col-lg-1 col-md-1 col-sm-1">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <%= link_to 'Hraci', users_path, :class => 'btn btn-default btn-circle btn-lg' %>
+        <br>
+        <%= link_to 'Miestnosti', room_index_path, :class => 'btn btn-default btn-circle btn-lg' %>
+        <br>
+        <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
+        <br>
+        <button type="button" class="btn btn-default btn-circle btn-lg">side menu</button>
+      </div>
+  <% end %>
 
-    <div class="col-lg-10 col-md-10 col-sm-10">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+  <div class="col-lg-11 col-md-11 col-sm-11">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
+    <div class="container-fluid">
       <%= yield %>
     </div>
   </div>
+</div>
 
 </body>
 </html>

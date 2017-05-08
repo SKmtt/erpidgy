@@ -1,2 +1,59 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>Zoznam postav:</h1>
+
+<div id="characters">
+  <% @user.characters.each do |f| %>
+
+      <div class="jumbotron">
+        <p><%= f.name %> <%= f.surname %> </p>
+        Status: <%= f.status %>
+        <br><br>
+        <%= f.description %>
+      </div>
+
+  <% end %>
+
+  <% if current_user.id == @user.id %>
+      <button onclick="openNewForm()" id="new-button" class="btn btn-default btn-circle btn-lg">Ziadost o novu postavu</button>
+  <% end %>
+</div>
+
+
+
+<% if current_user.id == @user.id %>
+    <div id="new-character" style="display: none;">
+      <h4>Ziadost o novu postavu:</h4>
+      <%= form_for :character, url: character_path, remote: true, html: {id: 'new-form'} do |f| %>
+
+          <%= f.label :meno %></br>
+          <%= f.text_field :name %></br>
+          </br>
+
+          <%= f.label :priezvisko %></br>
+          <%= f.text_field :surname %></br>
+          </br>
+
+          <%= f.label :popis %></br>
+          <%= f.text_area :description %></br>
+          </br>
+
+          <%= f.submit 'Odoslat', :class => "btn btn-default btn-circle btn-lg" %>
+
+      <% end %>
+      <button onclick="closeNewForm()" class="btn btn-default btn-circle btn-lg">Zrusit</button>
+    </div>
+<% end %>
+
+
+<script>
+    function closeNewForm() {
+        $("#new-form")[0].reset();
+        $("#new-character").hide();
+        $("#new-button").show();
+    }
+
+    function openNewForm() {
+        $("#new-character").show();
+        $("#new-button").hide();
+    }
+    openNewForm
+</script>

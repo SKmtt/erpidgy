@@ -1,7 +1,7 @@
 <h4>Miestnosti:</h4>
 <% @rooms.each do |room| %>
 
-    <%= link_to room.name, 'miestnost/'+room.parametrized %> <br>
+    <%= link_to room.name, room_path(room.parametrized) %> <br>
 
 <% end %>
 </br></br>
