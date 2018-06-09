@@ -9,6 +9,9 @@ class UsersController < ApplicationController
     @user = User.where(:username => params[:id]).first
     if @user.nil?
       redirect_to domov_path
+    elsif @user.profile.nil?
+      Profile.new(:user => @user).save
     end
+
   end
 end

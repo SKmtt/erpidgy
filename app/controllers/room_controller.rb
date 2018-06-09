@@ -10,6 +10,9 @@ class RoomController < ApplicationController
     if @room.nil?
       redirect_to domov_path
     end
+
+    @messages = Message.where(:game_id => @room.games.ids).or(Message.where(:scope => 'global'))
+
   end
 
   def create
@@ -17,7 +20,7 @@ class RoomController < ApplicationController
     @room.parametrized = @room.name.parameterize('_')
     @room.save
 
-    redirect_to miestnosti_path
+    redirect_to '/miestnosti'
   end
 
   def edit
@@ -26,10 +29,24 @@ class RoomController < ApplicationController
   def destroy
   end
 
+  def saveMessage
+    message = Message.new(permit_message)
+    message.character = current_user.characters.first
+    message.scope = 'global'
+
+    if message.save
+      redirect_to request.url
+    end
+  end
+
 private
 
   def permit_room
     params.require(:room).permit(:name, :description)
+  end
+
+  def permit_message
+    params.require(:message).permit(:body)
   end
 
 end

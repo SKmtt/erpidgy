@@ -1,19 +1,33 @@
-<h1>Zoznam postav:</h1>
+<h2>Hrac <%= @user.username %></h2>
+
+
+
+<div id="profile">
+  <% if current_user.id == @user.id %>
+      <button onclick="openNewForm()" id="new-button" class="btn btn-default btn-circle btn-lg">Ziadost o novu postavu</button>
+  <% end %>
+  <h3>Profil:</h3>
+  <div id="profile" class="jumbotron">
+    <p><%= @user.profile.description %></p>
+    <button>Edit</button>
+    <button style="display: none;">Save</button>
+    <button style="display: none;">Cancel</button>
+  </div>
+</div>
 
 <div id="characters">
+
+  <h3>Zoznam postav:</h3>
   <% @user.characters.each do |f| %>
 
       <div class="jumbotron">
+        <%= image_tag(f.profile_image_path, size: '80', title: f.full_name, alt: f.full_name)  %>
         <p><%= f.name %> <%= f.surname %> </p>
         Status: <%= f.status %>
         <br><br>
         <%= f.description %>
       </div>
 
-  <% end %>
-
-  <% if current_user.id == @user.id %>
-      <button onclick="openNewForm()" id="new-button" class="btn btn-default btn-circle btn-lg">Ziadost o novu postavu</button>
   <% end %>
 </div>
 
@@ -47,13 +61,15 @@
 <script>
     function closeNewForm() {
         $("#new-form")[0].reset();
-        $("#new-character").hide();
-        $("#new-button").show();
+        $("#new-character").slideUp();
+        $("#characters").slideDown();
+        $("#profile").slideDown();
     }
 
     function openNewForm() {
-        $("#new-character").show();
-        $("#new-button").hide();
+        $("#new-character").slideDown();
+        $("#characters").slideUp();
+        $("#profile").slideUp();
     }
     openNewForm
 </script>

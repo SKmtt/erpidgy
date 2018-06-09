@@ -1,1 +1,117 @@
-<h1><%= @room.name %></h1>
+<h3><%= @room.name %></h3>
+
+<div class="row">
+
+  <div class="jumbotron col-lg-9 col-md-9 col-sm-9" style="margin-left: 15px">
+
+    Sprava:<br>
+    <textarea name="message[body]" id="message_body"></textarea>
+    <button id="send">Pošli</button>
+    <br>
+    <a class="btn btn-default btn-sm" onclick="onlyGame()">Iba hra</a>
+    <a class="btn btn-default btn-sm" onclick="onlyGlobal()">Iba chat</a>
+    <a class="btn btn-default btn-sm" onclick="showAll()">Vsetky spravy</a>
+    <div id="messsages">
+      <% @messages.reverse.each do |f| %>
+
+
+          <% if f.scope == 'global' %>
+              <div class="global">
+                <br>
+                <div style="background-color: #e5dbcb">
+                  <p><%= f.body %></p>
+                  <br>
+                  <%= link_to f.character.user.username, users_path + '/' + f.character.user.username %>
+                  <%= image_tag(f.character.profile_image_path, size: '50', title: f.character.full_name, alt: f.character.full_name)  %>
+                </div>
+              </div>
+          <% else %>
+              <div class="game">
+                <br>
+                <div style="background-color: #c0c1c7">
+                  <p style="font-size:small;"><%= f.body %></p>
+                  <br>
+                  <%= link_to f.character.name + ' ' + f.character.surname, users_path + '/' + f.character.user.username %>
+                  <%= image_tag(f.character.profile_image_path, size: '50', title: f.character.full_name, alt: f.character.full_name)  %>
+                </div>
+              </div>
+          <% end %>
+
+      <% end %>
+    </div>
+  </div>
+
+
+  <div id="games" class="jumbotron col-lg-2 col-md-2 col-sm-2" style="margin-left: 25px">
+
+    <h4>Hry:</h4>
+    <% @room.games.each do |g| %>
+
+        <a class='btn btn-default btn-sm' onclick="toggleGameDesc()"><%= g.name %></a>
+        <p class="gameDescription" style="font-size:xx-small; display: none;"><%= g.description %></p>
+
+    <% end %>
+
+  </div>
+
+</div>
+
+
+<script>
+
+    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
+
+    dispatcher.on_open = function (data) {
+        $("#onopen").text('connection open');
+    }
+
+    $("#send").click(function () {
+        var body = $("#message_body").val()
+        var message = {
+            body: body,
+            user: ''
+        }
+
+        if (body.trim()) {
+            console.log('Sending: '+body);
+            dispatcher.trigger('messages.create', message);
+            $("#message_body").val('');
+        }
+    })
+
+    dispatcher.bind('messages.create_success', function (message) {
+        console.log('message success:' + message.body);
+        $("#messsages").prepend(
+            $('<div/>', {'class': 'global'}).append($('<br>'))
+            .append($('<div/>', {'style': 'background-color: #e5dbcb'})
+                .append($('<p/>', {text: message.body}))
+                .append($('<br>'))
+                .append($('<a/>', {text: message.user, 'href': 'users/' + message.user}))
+            )
+        );
+    });
+
+    dispatcher.bind('messages.create_fail', function (message) {
+        console.log('message failed');
+    });
+
+    function onlyGame() {
+        $(".global").slideUp();
+        $(".game").slideDown();
+    }
+
+    function onlyGlobal() {
+        $(".global").slideDown();
+        $(".game").slideUp();
+    }
+
+    function showAll() {
+        $(".global").slideDown();
+        $(".game").slideDown();
+    }
+
+    function toggleGameDesc() {
+        $(".gameDescription").slideToggle();
+    }
+
+</script>

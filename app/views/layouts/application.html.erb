@@ -21,6 +21,15 @@
 
       Pouzivatel: <%= current_user.username %>
 
+
+      <% current_user.characters.each do |c| %>
+          <% if current_user.current_character_id == c.id %>
+              <%= image_tag(c.profile_image_path, size: '60', title: c.full_name, alt: c.full_name, class: 'pull-center character_image current_character', id: c.id) %>
+          <% else %>
+              <%= image_tag(c.profile_image_path, size: '40', title: c.full_name, alt: c.full_name, class: 'pull-center character_image', id: c.id) %>
+          <% end %>
+      <% end %>
+
       <a rel="nofollow" data-method="delete" href="<%= destroy_user_session_path %>" class="btn btn-default btn-lg pull-right" role="button">
         Odhlasit </a>
 
@@ -61,6 +70,23 @@
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".character_image").click(function () {
+            if(!$(this).is($('.current_character'))){
+                var xhttp = new XMLHttpRequest();
+                var url = '/character/switch/' + $(this).attr('id');
+                $(".current_character").attr({'height':'40', 'width':'40'});
+                $(".current_character").removeClass("current_character");
+                $(this).addClass("current_character");
+                $(this).attr({'height':'60', 'width':'60'});
+                xhttp.open('GET', url, true);
+                xhttp.send();
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

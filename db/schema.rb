@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508133847) do
+ActiveRecord::Schema.define(version: 20180609053639) do
 
   create_table "characters", force: :cascade do |t|
     t.string  "name"
@@ -18,18 +18,40 @@ ActiveRecord::Schema.define(version: 20170508133847) do
     t.text    "description"
     t.date    "birth"
     t.integer "user_id"
-    t.string  "status",      default: "pending"
+    t.string  "status",        default: "pending"
+    t.string  "profile_image"
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
-  create_table "replies", force: :cascade do |t|
-    t.text     "text"
+  create_table "games", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.string   "state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["room_id"], name: "index_games_on_room_id"
+    t.index ["user_id"], name: "index_games_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "body"
+    t.string   "scope"
+    t.integer  "character_id"
+    t.integer  "game_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "room_id"
-    t.integer  "character_id"
-    t.index ["character_id"], name: "index_replies_on_character_id"
-    t.index ["room_id"], name: "index_replies_on_room_id"
+    t.index ["character_id"], name: "index_messages_on_character_id"
+    t.index ["game_id"], name: "index_messages_on_game_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -57,7 +79,21 @@ ActiveRecord::Schema.define(version: 20170508133847) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
+    t.integer  "current_character_id"
+    t.string   "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.string   "invited_by_type"
+    t.integer  "invited_by_id"
+    t.integer  "invitations_count",      default: 0
+    t.index ["current_character_id"], name: "index_users_on_current_character_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invitations_count"], name: "index_users_on_invitations_count"
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

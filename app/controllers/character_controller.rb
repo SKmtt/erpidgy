@@ -12,7 +12,7 @@ class CharacterController < ApplicationController
     if @character.save
       respond_to do |format|
         format.html { redirect_to users_path(current_user.username) }
-        format.js { }
+        format.js {}
       end
     end
   end
@@ -24,6 +24,18 @@ class CharacterController < ApplicationController
   end
 
   def index
+  end
+
+  def switch_current
+    # TODO check if it is valid character
+    current_user.current_character_id = params[:id]
+    if current_user.save
+      puts 'setting new character'
+      respond_to do |format|
+        format.json { head :no_content }
+        format.js { render :layout => false }
+      end
+    end
   end
 
   private

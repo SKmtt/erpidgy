@@ -7,9 +7,5 @@ class CreateRooms < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-
-    add_column :replies, :room_id, :integer
-
-    add_index :replies, :room_id
   end
 end
