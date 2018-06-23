@@ -1,3 +1,35 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.center_div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#initial_e{
+  color: #403432;
+  font-weight: 600;
+  font-family: "Hamlet", serif;
+  font-size: 315px;
+  opacity: 0.6;
+  line-height: 0;
+  cursor: pointer;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+
+#initial_e:hover{
+  opacity: 1;
+  font-size: 350px;
+}
+
+@font-face {
+  font-family: 'LinLibertine';
+  src: asset-url('LinLibertine_aDRS.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Hamlet';
+  src: asset-url('HamletOrNot.ttf') format('truetype');
+}

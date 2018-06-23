@@ -5,8 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :characters
   has_one :profile
+  attribute :email, :string
 
   def profile_link
     "users/#{username}"
   end
+
 end

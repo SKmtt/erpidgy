@@ -13,3 +13,14 @@
 
   <% end %>
 </div>
+
+
+<h4>Invite User</h4>
+<%= form_for User.new, :url => users_invite_path do |f| %>
+    <div>
+      <%= f.text_field :email, required: true %>
+
+      <%= f.text_field :username, required: true %>
+    </div>
+    <%= f.submit "Invite" %>
+<%  end %>

@@ -1,1 +1,12 @@
-<h1>Erpidgy welcome page</h1>
+<div class="center_div">
+  <h1 id="initial_e">E</h1>
+</div>
+
+<script>
+    $("#initial_e").click(function(){
+        $("#initial_e").fadeOut(2000, 0);
+
+        $(".center_div").append("<%= escape_javascript( render partial: 'welcome/loginform') %>");
+        $(".center_div form").delay(2000).fadeTo(2000, 1);
+    });
+</script>

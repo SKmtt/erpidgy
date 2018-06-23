@@ -11,8 +11,8 @@
 <body>
 
 
-<div class="row hidden-sm hidden-xs" style="max-width:95%; margin: auto;">
-  <% if user_signed_in? %>
+<% if user_signed_in? %>
+    <div class="row hidden-sm hidden-xs" style="max-width:95%; margin: auto;">
 
 
       <%= link_to 'Domov', domov_path, :class => "btn btn-default btn-circle btn-lg" %>
@@ -32,15 +32,8 @@
 
       <a rel="nofollow" data-method="delete" href="<%= destroy_user_session_path %>" class="btn btn-default btn-lg pull-right" role="button">
         Odhlasit </a>
-
-  <% else %>
-      <ul class="list-inline pull-right">
-        <li><a href="<%= new_user_registration_path %>" class="btn btn-default btn-lg" role="button"> Registracia </a>
-        </li>
-        <li><a href="<%= new_user_session_path %>" class="btn btn-default btn-lg" role="button"> Prihlasenie </a></li>
-      </ul>
-  <% end %>
-</div>
+    </div>
+<% end %>
 
 <div class="row" style="max-width:98%; margin:auto;">
 
@@ -62,25 +55,22 @@
   <% end %>
 
   <div class="col-lg-11 col-md-11 col-sm-11">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <div class="container-fluid">
+    <div class="container">
       <%= yield %>
     </div>
   </div>
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(".character_image").click(function () {
-            if(!$(this).is($('.current_character'))){
+            if (!$(this).is($('.current_character'))) {
                 var xhttp = new XMLHttpRequest();
                 var url = '/character/switch/' + $(this).attr('id');
-                $(".current_character").attr({'height':'40', 'width':'40'});
+                $(".current_character").attr({'height': '40', 'width': '40'});
                 $(".current_character").removeClass("current_character");
                 $(this).addClass("current_character");
-                $(this).attr({'height':'60', 'width':'60'});
+                $(this).attr({'height': '60', 'width': '60'});
                 xhttp.open('GET', url, true);
                 xhttp.send();
             }

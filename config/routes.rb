@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'users' => 'users#index'
   get 'users/:id' => 'users#show'
+  post 'users/invite' => 'users#invite'
 
   resources :room, path: 'miestnosti', only: [:show, :index, :update, :destroy, :create]
 

@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!
+  include ApplicationHelper
+
+  before_action :authenticate_redirect
   respond_to :html, :js
 
   def index

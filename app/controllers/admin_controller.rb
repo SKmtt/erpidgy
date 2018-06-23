@@ -1,4 +1,8 @@
 class AdminController < ApplicationController
+  include ApplicationHelper
+
+  before_action :authenticate_redirect
+
   def index
     @characters = Character.where(:status => 'pending')
   end

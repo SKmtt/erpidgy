@@ -14,4 +14,9 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def invite
+    User.invite!(email: params[:user][:email], username: params[:user][:username])
+    redirect_to root_path
+  end
 end
