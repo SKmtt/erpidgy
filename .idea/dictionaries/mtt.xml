@@ -9,6 +9,7 @@
       <w>therubyracer</w>
       <w>turbolinks</w>
       <w>uglifier</w>
+      <w>websocket</w>
       <w>zoneinfo</w>
     </words>
   </dictionary>
