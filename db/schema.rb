@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(version: 20180623125817) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "resources_url"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "parametrized"
-    t.boolean  "is_open"
+    t.text    "name"
+    t.text    "description"
+    t.text    "resources_url"
+    t.text    "created_at",    null: false
+    t.text    "updated_at",    null: false
+    t.text    "parametrized"
+    t.integer "is_open"
   end
 
   create_table "users", force: :cascade do |t|

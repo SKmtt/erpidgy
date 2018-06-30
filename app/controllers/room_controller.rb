@@ -72,6 +72,10 @@ class RoomController < ApplicationController
     end
   end
 
+  def manage_people
+    @actual_room = Room.find(params[:id])
+  end
+
   # TODO update things below
 
   def edit

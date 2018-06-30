@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'miestnosti_list/:id' => 'room#open_room'
   post 'miestnosti_list/:id' => 'room#close_room'
   # post 'miestnosti/:id' => 'room#saveMessage'
+  get 'miestnosti_ppl/:id' => 'room#manage_people'
 
   post 'character' => 'character#create'
   post 'character/:id' => 'admin#activate'

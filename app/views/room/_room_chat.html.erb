@@ -2,10 +2,6 @@
     <div id="<%= actual_room.id %>" class="actual_room">
       <h3><%= actual_room.name %></h3>
 
-      Sprava:<br>
-      <textarea name="message[body]" id="message_body"></textarea>
-      <button id="send">Pošli</button>
-      <br>
       <div id="messsages">
         <% actual_room.messages.reverse.each do |f| %>
             <div class="game">
@@ -19,23 +15,48 @@
             </div>
         <% end %>
       </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9" style="background-color: #99b058">
+          Sprava:<br>
+          <textarea name="message[body]" id="message_body"></textarea>
+          <button id="send">Pošli</button>
+        </div>
+        <% if actual_room.id != 1 %>
+            <div class="col-lg-3 col-md-3 col-sm-3" style="background-color: #b87186">
+              <button onclick="renderManagePplOverlay()">Manage ppl</button>
+              <button>Manage location</button>
+              <button>Export game</button>
+              <button>End game</button>
+            </div>
+        <% end %>
+      </div>
     </div>
-<% end %>
 
-<script>
-    $("#send").click(function () {
-        var body = $("#message_body").val();
-        var room = $(".actual_room")[0].id;
-        var message = {
-            body: body,
-            user: '',
-            room: room
-        };
 
-        if (body.trim()) {
-            console.log('Sending: ' + body);
-            dispatcher.trigger('messages.create', message);
-            $("#message_body").val('');
+    <script>
+        $("#send").click(function () {
+            var body = $("#message_body").val();
+            var room = $(".actual_room")[0].id;
+            var message = {
+                body: body,
+                user: '',
+                room: room
+            };
+
+            if (body.trim()) {
+                console.log('Sending: ' + body);
+                dispatcher.trigger('messages.create', message);
+                $("#message_body").val('');
+            }
+        });
+
+        function renderManagePplOverlay() {
+            $.ajax({
+                type: 'GET',
+                url: 'miestnosti_ppl/<%= actual_room.id %>'
+            });
         }
-    });
-</script>
+    </script>
+
+<% end %>

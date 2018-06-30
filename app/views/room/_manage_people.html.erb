@@ -1,0 +1,37 @@
+<div id="manage_people">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      Owner:<br>
+      <%= actual_room.users_rooms.where(status: 'owner').first.user.username %>
+      <br>
+      <br>
+      Players:<br>
+      <% players = actual_room.users_rooms.where(status: 'player') %>
+      <% unless players.nil? %>
+          <% players.each do |p| %>
+              <%= p.user.username %>
+              <button></button>
+          <% end %>
+      <% end %>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      Spectators:
+      <% spectators = actual_room.users_rooms.where(status: 'spectator') %>
+      <% unless spectators.nil? %>
+          <% spectators.each do |s| %>
+              <%= s.user.username %>
+          <% end %>
+      <% end %>
+    </div>
+    <button onclick="closeOverlay()">Zavriet</button>
+  </div>
+</div>
+
+<script>
+    function invite(id) {
+        $.ajax({
+            type: 'GET',
+            url: '<%= miestnosti_list_path %>/' + id
+        });
+    }
+</script>
