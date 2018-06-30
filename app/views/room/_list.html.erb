@@ -1,0 +1,39 @@
+<div id="add_chat">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <%# TODO create template for room buttons or whatever %>
+      You can play:<br>
+      <% @room_invited.each do |r| %>
+        <button onclick="openRoom(<%= r.room.id %>)"><%= r.room.name %></button><br>
+      <% end %>
+      <br>
+      You are invited to spectate:<br>
+      <% @room_spectator.each do |r| %>
+          <button onclick="openRoom(<%= r.room.id %>)"><%= r.room.name %></button><br>
+      <% end %>
+      <br>
+      Public games:<br>
+      <% @room_open.each do |r| %>
+          <button onclick="openRoom(<%= r.id %>)"><%= r.name %></button><br>
+      <% end %>
+      <br>
+      You cannot play:<br>
+      <% @room_closed.each do |r| %>
+          <button><%= r.name %></button><br>
+      <% end %>
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+    </div>
+    <button onclick="closeOverlay()">Zavriet</button>
+  </div>
+</div>
+
+<script>
+  function openRoom(id) {
+      $.ajax({
+          type: 'GET',
+          url: '<%= miestnosti_list_path %>/'+id
+      });
+  }
+</script>

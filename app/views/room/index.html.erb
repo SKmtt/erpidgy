@@ -1,23 +1,84 @@
-<h4>Miestnosti:</h4>
-<% @rooms.each do |room| %>
+<% actual_room = @open_rooms.first.nil? ? nil : @open_rooms.first.room %>
+<div class="row">
+  <div id="room_chat" class="col-lg-9 col-md-9 col-sm-12" style="background-color: aquamarine">
+    <%= render partial: 'room_chat', locals: {actual_room: actual_room} %>
+  </div>
 
-    <%= link_to room.name, room_path(room.parametrized) %> <br>
+  <div class="col-lg-3 col-md-3 col-sm-12" id="open_rooms" style="background-color: #B00100">
+    <% @open_rooms.each do |oi| %>
+        <%= render partial: 'open_room', locals: { room: oi.room} %>
+    <% end %>
+    <button onclick="renderAddChatOverlay()">Add chat</button>
+    <button onclick="renderNewChatOverlay()">New game room</button>
+  </div>
 
-<% end %>
-</br></br>
+  <div id="overlay" style="display: none">
+    <div id="overlay_content"></div>
+  </div>
+</div>
 
-<h4>Nova miestnost:</h4>
-<%= form_for :room do |f| %>
+<script>
+    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
+    //    var dispatcher = new WebSocketRails('127.0.0.1:3000/websocket');
 
-    <%= f.label :name %></br>
-    <%=  f.text_field :name %></br>
-    </br>
+    dispatcher.on_open = function (data) {
+        $("#onopen").text('connection open');
+    };
 
-    <%= f.label :description %></br>
-    <%=  f.text_field :description %></br>
-    </br>
+    dispatcher.bind('messages.create_success', function (message) {
+        console.log('message success:' + message.body);
+        $("#messsages").prepend(
+            $('<div/>', {'class': 'global'}).append($('<br>'))
+                .append($('<div/>', {'style': 'background-color: #e5dbcb'})
+                    .append($('<p/>', {text: message.body}))
+                    .append($('<br>'))
+                    .append($('<a/>', {text: message.user, 'href': 'users/' + message.user}))
+                )
+        );
+    });
 
-    <%= f.submit %>
+    dispatcher.bind('messages.create_fail', function (message) {
+        console.log('message failed');
+    });
 
-<% end %>
+    function renderAddChatOverlay() {
+        $.ajax({
+            type: 'GET',
+            url: '<%= miestnosti_list_path %>'
+        });
+    }
 
+    function renderNewChatOverlay() {
+        $('#overlay_content').html("<%= escape_javascript(render partial: 'new_room', locals: { } ) %>");
+        $('#overlay').css("display", "block");
+    }
+
+    function closeOverlay() {
+        $('#overlay').hide();
+        $('#overlay_content').html();
+    }
+
+    function switchRoom(id) {
+        if (id != null) {
+            $.ajax({
+                type: 'GET',
+                url: 'miestnosti/' + id
+            });
+        }
+    }
+
+    function closeRoom(id) {
+        $('#room_tab_'+id).remove();
+        var tab_element = $('.room_tab');
+        if (tab_element.length == 0){
+            $('#room_chat').html('');
+        } else {
+            var room_id = tab_element[0].id.split('_')[2];
+            switchRoom(room_id);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '<%= miestnosti_list_path %>/' + id
+        });
+    }
+</script>

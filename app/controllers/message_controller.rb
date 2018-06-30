@@ -2,8 +2,8 @@ class MessageController < WebsocketRails::BaseController
   def create
     sprava = Message.new
     sprava.body = message[:body]
-    sprava.scope = 'global'
     sprava.character = Character.find(current_user.current_character_id)
+    sprava.room = Room.find(message[:room])
 
     message[:user] = current_user.username
 

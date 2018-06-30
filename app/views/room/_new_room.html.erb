@@ -1,0 +1,22 @@
+<div id="new_chat">
+
+  <%= form_for :room, url: room_index_path, remote: true do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <br>
+
+      <%= f.label :description %>
+      <%= f.text_field :description %>
+      <br>
+
+      <%= f.label :is_public %>
+      <%= f.check_box :is_open %>
+      <br>
+
+      <%= f.submit 'Vytvorit', class: 'btn btn-default' %>
+
+  <% end %>
+
+  <button onclick="closeOverlay()">Zavriet</button>
+</div>

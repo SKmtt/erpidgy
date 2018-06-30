@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration[5.0]
       t.text :body
       t.string :scope
       t.references :character, foreign_key: true
-      t.references :game, foreign_key: true
+      t.references :room, foreign_key: true
 
       t.timestamps
     end

@@ -14,8 +14,10 @@ Rails.application.routes.draw do
   post 'users/invite' => 'users#invite'
 
   resources :room, path: 'miestnosti', only: [:show, :index, :update, :destroy, :create]
-
-  post 'miestnosti/:id' => 'room#saveMessage'
+  get 'miestnosti_list' => 'room#list'
+  get 'miestnosti_list/:id' => 'room#open_room'
+  post 'miestnosti_list/:id' => 'room#close_room'
+  # post 'miestnosti/:id' => 'room#saveMessage'
 
   post 'character' => 'character#create'
   post 'character/:id' => 'admin#activate'

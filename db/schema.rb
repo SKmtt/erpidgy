@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180609053639) do
+ActiveRecord::Schema.define(version: 20180623125817) do
 
   create_table "characters", force: :cascade do |t|
     t.string  "name"
@@ -23,27 +23,15 @@ ActiveRecord::Schema.define(version: 20180609053639) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
-  create_table "games", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "user_id"
-    t.integer  "room_id"
-    t.string   "state"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["room_id"], name: "index_games_on_room_id"
-    t.index ["user_id"], name: "index_games_on_user_id"
-  end
-
   create_table "messages", force: :cascade do |t|
     t.text     "body"
     t.string   "scope"
     t.integer  "character_id"
-    t.integer  "game_id"
+    t.integer  "room_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["character_id"], name: "index_messages_on_character_id"
-    t.index ["game_id"], name: "index_messages_on_game_id"
+    t.index ["room_id"], name: "index_messages_on_room_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -61,6 +49,7 @@ ActiveRecord::Schema.define(version: 20180609053639) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "parametrized"
+    t.boolean  "is_open"
   end
 
   create_table "users", force: :cascade do |t|
@@ -95,6 +84,18 @@ ActiveRecord::Schema.define(version: 20180609053639) do
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_rooms", force: :cascade do |t|
+    t.string   "status"
+    t.boolean  "can_add_place"
+    t.boolean  "open"
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["room_id"], name: "index_users_rooms_on_room_id"
+    t.index ["user_id"], name: "index_users_rooms_on_user_id"
   end
 
 end

@@ -1,4 +1,4 @@
 class Message < ApplicationRecord
   belongs_to :character
-  belongs_to :game, required: false
+  belongs_to :room, required: false
 end
