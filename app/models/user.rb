@@ -13,4 +13,16 @@ class User < ApplicationRecord
     "/users/#{username}"
   end
 
+  def room_link(room)
+    "#{id}/#{room.id}"
+  end
+
+  def label
+    username
+  end
+
+  def value
+    id
+  end
+
 end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  room: one
+  user: one
+  invite_type: MyString
+
+two:
+  room: two
+  user: two
+  invite_type: MyString

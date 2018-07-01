@@ -1,3 +1,5 @@
 $('#overlay_content').html("<%= escape_javascript(render partial: 'manage_people', locals: {
                                 actual_room: @actual_room} ) %>");
+createAvailableUsers(<%= @users %>, '#players_input');
+createAvailableUsers(<%= @users %>, '#spectators_input');
 $('#overlay').css("display", "block");

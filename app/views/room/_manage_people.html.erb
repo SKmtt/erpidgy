@@ -5,33 +5,64 @@
       <%= actual_room.users_rooms.where(status: 'owner').first.user.username %>
       <br>
       <br>
-      Players:<br>
-      <% players = actual_room.users_rooms.where(status: 'player') %>
-      <% unless players.nil? %>
-          <% players.each do |p| %>
-              <%= p.user.username %>
-              <button></button>
-          <% end %>
-      <% end %>
+      <div id="players">
+        Players:<br>
+        <% players = actual_room.users_rooms.where(status: 'player') %>
+        <% unless players.nil? %>
+            <% players.each do |p| %>
+                <%= render partial: 'room/helper/player_invite', locals: {user: p.user, actual_room: actual_room} %>
+            <% end %>
+        <% end %>
+      </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12">
-      Spectators:
-      <% spectators = actual_room.users_rooms.where(status: 'spectator') %>
-      <% unless spectators.nil? %>
-          <% spectators.each do |s| %>
-              <%= s.user.username %>
-          <% end %>
-      <% end %>
+      <div id="spectators">
+        Spectators:
+        <% spectators = actual_room.users_rooms.where(status: 'spectator') %>
+        <% unless spectators.nil? %>
+            <% spectators.each do |s| %>
+                <%= render partial: 'room/helper/player_invite', locals: {user: s.user, actual_room: actual_room} %>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="ui-widget">
+        <label for="players_input">Add player</label>
+        <input id="players_input">
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="ui-widget">
+        <label for="spectators_input">Add spectator</label>
+        <input id="spectators_input">
+      </div>
     </div>
     <button onclick="closeOverlay()">Zavriet</button>
   </div>
 </div>
 
 <script>
-    function invite(id) {
+    function remove_player(id) {
         $.ajax({
-            type: 'GET',
-            url: '<%= miestnosti_list_path %>/' + id
+            type: 'POST',
+            url: 'remove_player/' + id
         });
+    }
+
+    function addUser(value, type) {
+        if (type.includes('player')) {
+            $.ajax({
+                type: 'POST',
+                url: 'add_player/' + value + '/' + <%= actual_room.id.to_s %>
+            });
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: 'add_spectator/' + value + '/' + <%= actual_room.id.to_s %>
+            });
+        }
     }
 </script>

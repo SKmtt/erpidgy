@@ -14,9 +14,9 @@ class RoomController < ApplicationController
 
   def list
     all_open = current_user.users_rooms.where(open: true).pluck(:room_id)
-    invited = current_user.users_rooms.where(status: %w(invited owner spectator)).pluck(:room_id)
+    invited = current_user.users_rooms.where(status: %w(player owner spectator)).pluck(:room_id)
     @room_open = Room.where(is_open: 1).where.not(id: all_open)
-    @room_invited = current_user.users_rooms.where(status: %w(invited owner), open: false)
+    @room_invited = current_user.users_rooms.where(status: %w(player owner), open: false)
     @room_spectator = current_user.users_rooms.where(status: 'spectator', open: false)
     @room_closed = Room.where(is_open: 0).where.not(id: invited)
     # TODO filter already open chat, blacklisted persons by you and you blacklisted by person
@@ -74,6 +74,41 @@ class RoomController < ApplicationController
 
   def manage_people
     @actual_room = Room.find(params[:id])
+    invited = UsersRoom.where(room_id: @actual_room).pluck(:user_id)
+    @users = User.where.not(id: invited).to_json(:only => [], :methods => [:value, :label]).html_safe
+    @users = User.all.to_json(:only => [], :methods => [:value, :label]).html_safe
+  end
+
+  def add_player
+    @user = User.find(params[:user])
+    @room = Room.find(params[:room])
+    create_user_room(@user, @room, 'player')
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def add_spectator
+    @user = User.find(params[:user])
+    @room = Room.find(params[:room])
+    create_user_room(@user, @room, 'spectator')
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def remove_player
+    @id = 0
+    user_room = UsersRoom.where(room_id: params[:room], user_id: params[:user]).first
+    unless user_room.status == 'owner'
+      @id = user_room.user.id
+      user_room.destroy
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 
   # TODO update things below
@@ -95,6 +130,21 @@ class RoomController < ApplicationController
   end
 
   private
+
+  def create_user_room(user, room, type)
+    user_room = UsersRoom.where(user_id: user, room_id: room).first
+    if user_room.nil?
+      user_room = UsersRoom.new
+      user_room.user = user
+      user_room.room = room
+      user_room.open = false
+      user_room.can_add_place = false
+    end
+
+    user_room.status = type
+
+    user_room.save
+  end
 
   def permit_room
     params.require(:room).permit(:name, :description, :is_open)

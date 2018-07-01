@@ -3,4 +3,12 @@
   Status: <%= character.status %>
   <br><br>
   <%= character.description %>
+  <br>
+  <div class="locations">
+    <% unless character.locations.nil? %>
+        <% character.locations.each do |l| %>
+          
+        <% end %>
+    <% end %>
+  </div>
 </div>

@@ -1,0 +1,2 @@
+$('#user_<%= @user.id %>').remove();
+$('#players').append("<%= escape_javascript(render partial: 'room/helper/player_invite', locals: { user: @user, actual_room: @room}) %>");

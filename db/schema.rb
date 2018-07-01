@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180623125817) do
+ActiveRecord::Schema.define(version: 20180701114546) do
 
   create_table "characters", force: :cascade do |t|
     t.string  "name"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20180623125817) do
     t.string  "status",        default: "pending"
     t.string  "profile_image"
     t.index ["user_id"], name: "index_characters_on_user_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.integer  "character_id"
+    t.string   "name"
+    t.string   "description"
+    t.string   "img_location"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["character_id"], name: "index_locations_on_character_id"
   end
 
   create_table "messages", force: :cascade do |t|

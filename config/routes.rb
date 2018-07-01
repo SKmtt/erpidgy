@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  get 'message/create'
 
   devise_for :users, controllers:{ sessions: 'users/sessions',
-                                   registrations: 'users/registrations'
+  registrations: 'users/registrations'
   }
 
   get 'welcome#index' => redirect("/")
@@ -13,18 +12,24 @@ Rails.application.routes.draw do
   get 'users/:id' => 'users#show'
   post 'users/invite' => 'users#invite'
 
+  get 'message/create'
+
   resources :room, path: 'miestnosti', only: [:show, :index, :update, :destroy, :create]
   get 'miestnosti_list' => 'room#list'
   get 'miestnosti_list/:id' => 'room#open_room'
   post 'miestnosti_list/:id' => 'room#close_room'
   # post 'miestnosti/:id' => 'room#saveMessage'
+  get 'miestnosti_ppl' => redirect('/')
   get 'miestnosti_ppl/:id' => 'room#manage_people'
+  post 'add_player/:user/:room' => 'room#add_player'
+  post 'add_spectator/:user/:room' => 'room#add_spectator'
+  post 'remove_player/:user/:room' => 'room#remove_player'
+
+  resources :location, only: [:create, :destroy, :update]
 
   post 'character' => 'character#create'
   post 'character/:id' => 'admin#activate'
   get 'character/switch/:id' => 'character#switch_current'
-
-  #get ':id' => redirect("/")
 
   root to: "welcome#index"
 end
