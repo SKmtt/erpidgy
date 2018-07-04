@@ -1,14 +1,37 @@
-<div class="jumbotron">
+<div id="character_<%= character.id %>" class="jumbotron character" style="background-color: #9cb8b4">
+  <%= image_tag(character.profile_image_path, size: '80', title: character.full_name, alt: character.full_name) %>
   <p><%= character.name %> <%= character.surname %> </p>
   Status: <%= character.status %>
   <br><br>
   <%= character.description %>
-  <br>
-  <div class="locations">
-    <% unless character.locations.nil? %>
-        <% character.locations.each do |l| %>
-          
-        <% end %>
-    <% end %>
+  <br><br>
+  <div class="locations" style="background-color: #c0c1c7">
+    Locations:
+    <div class="location_list">
+      <% unless character.locations.nil? %>
+          <% character.locations.each do |l| %>
+              <%= render partial: 'location/location', locals: {location: l} %>
+          <% end %>
+      <% end %>
+    </div>
+    <div class="new_location" style="background-color: rgb(98,203,159)">
+      <span onclick="toggleNewLocationForm('<%= character.id %>')">Create new location:</span>
+      <%= form_for :location, url: location_index_path, remote: true,
+                   html: {class: 'new_location_form', style: 'display: none;'} do |f| %>
+
+          <%= f.label :meno %><br>
+          <%= f.text_field :name %><br>
+          <br>
+
+          <%= f.label :popis %><br>
+          <%= f.text_area :description %><br>
+          <br>
+
+          <%= f.hidden_field :character_id, value: character.id %>
+
+          <%= f.submit 'Pridat', :class => "btn btn-default btn-circle btn-lg" %>
+
+      <% end %>
+    </div>
   </div>
 </div>

@@ -1,0 +1,15 @@
+<div id="location_<%= location.id %>" style="border: 1px solid;">
+  <div onclick="toggleLocation('<%= location.id %>')" style="background-color: #c7a448;" class="name">
+    <%= location.name %>
+  </div>
+  <div id="location_edit_<%= location.id %>" style="display: none; background-color: #b978c7">
+    <p>Name:
+      <span class="editable_location" id="name_<%= location.id %>"><%= location.name %></span>
+    </p>
+    <p>Description:
+      <span class="editable_location" id="description_<%= location.id %>"><%= location.description %></span>
+    </p>
+    <button onclick="closeLocation('<%= location.id %>')">Close</button>
+    <button onclick="removeLocation('<%= location.id %>')">Delete</button>
+  </div>
+</div>

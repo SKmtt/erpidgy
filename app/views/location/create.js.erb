@@ -1,0 +1,6 @@
+$('#character_<%= @location.character.id %> .location_list')
+    .append("<%= escape_javascript(render partial: 'location/location', locals: {location: @location}) %>");
+$('#location_edit_<%= @location.id %> .editable_location').each(function () {
+    addEditableForLocation(this);
+});
+$('#character_<%= @location.character.id %> .new_location_form').trigger('reset');
