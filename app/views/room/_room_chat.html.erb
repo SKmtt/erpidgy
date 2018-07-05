@@ -25,7 +25,14 @@
         <% if actual_room.id != 1 %>
             <div class="col-lg-3 col-md-3 col-sm-3" style="background-color: #b87186">
               <button onclick="renderManagePplOverlay()">Manage ppl</button>
-              <button>Manage location</button>
+              <button class="popup_container" onclick="toggleLocation()">
+                Show location
+                <div class="location_popup">
+                  <% unless actual_room.location.nil? %>
+                      <h4><%= actual_room.location.name %></h4>
+                  <% end %>
+                </div>
+              </button>
               <button>Export game</button>
               <button>End game</button>
             </div>
@@ -58,6 +65,10 @@
                 type: 'GET',
                 url: 'miestnosti_ppl/<%= actual_room.id %>'
             });
+        }
+
+        function toggleLocation() {
+
         }
     </script>
 

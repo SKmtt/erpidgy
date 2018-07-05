@@ -4,9 +4,9 @@
 
 <script>
     $("#initial_e").click(function(){
-        $("#initial_e").fadeOut(2000, 0);
-
-        $(".center_div").append("<%= escape_javascript( render partial: 'welcome/loginform') %>");
-        $(".center_div form").delay(2000).fadeTo(2000, 1);
+        $("#initial_e").fadeOut(2000, function () {
+            $(".center_div").append("<%= escape_javascript( render partial: 'welcome/loginform') %>");
+            $(".center_div form").fadeIn(2000);
+        });
     });
 </script>
