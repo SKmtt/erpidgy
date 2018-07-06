@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   post 'remove_player/:user/:room' => 'room#remove_player'
 
   resources :location, only: [:create, :destroy, :update]
+  get 'available_locations/:room' => 'location#available_locations'
+  post 'switch_location/:room/:location' => 'location#switch'
+  post 'temporary_location/:room' => 'location#create_temporary'
 
   post 'character' => 'character#create'
   post 'character/:id' => 'admin#activate'

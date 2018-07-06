@@ -20,6 +20,32 @@ class LocationController < ApplicationController
     end
   end
 
+  def available_locations
+    @characters = current_user.characters
+    @room = Room.find(params[:room])
+  end
+
+  def switch
+    @room = Room.find(params[:room])
+    location = @room.location
+    @room.location = Location.find(params[:location])
+    @room.save
+    if location.character.nil?
+      location.destroy
+    end
+  end
+
+  def create_temporary
+    @location = Location.new(permit_location)
+    @location.save
+    room = Room.find(params[:room])
+    location = room.location
+    room.location = @location
+    room.save
+    if location.character.nil?
+      location.destroy
+    end
+  end
 
   private
 

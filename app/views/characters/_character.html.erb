@@ -10,7 +10,7 @@
     <div class="location_list">
       <% unless character.locations.nil? %>
           <% character.locations.each do |l| %>
-              <%= render partial: 'location/location', locals: {location: l} %>
+              <%= render partial: 'location/partial/location', locals: {location: l} %>
           <% end %>
       <% end %>
     </div>

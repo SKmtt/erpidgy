@@ -25,14 +25,19 @@
         <% if actual_room.id != 1 %>
             <div class="col-lg-3 col-md-3 col-sm-3" style="background-color: #b87186">
               <button onclick="renderManagePplOverlay()">Manage ppl</button>
-              <button class="popup_container" onclick="toggleLocation()">
-                Show location
+              <div class="popup_container">
+                <button onclick="toggleLocationPopup()">Show location</button>
                 <div class="location_popup">
                   <% unless actual_room.location.nil? %>
-                      <h4><%= actual_room.location.name %></h4>
+                      <h4 align="center"><%= actual_room.location.name %></h4>
+                      <p><%= actual_room.location.description %></p>
+                  <% else %>
+                      <h4 align="center">No location</h4>
+                      <p></p>
                   <% end %>
+                  <button onclick="renderManageLocationOverlay()">Choose new location</button>
                 </div>
-              </button>
+              </div>
               <button>Export game</button>
               <button>End game</button>
             </div>
@@ -63,12 +68,19 @@
         function renderManagePplOverlay() {
             $.ajax({
                 type: 'GET',
-                url: 'miestnosti_ppl/<%= actual_room.id %>'
+                url: '<%= miestnosti_ppl_path %>/<%= actual_room.id %>'
             });
         }
 
-        function toggleLocation() {
+        function renderManageLocationOverlay() {
+            $.ajax({
+                type: 'GET',
+                url: '/available_locations/<%= actual_room.id %>'
+            })
+        }
 
+        function toggleLocationPopup() {
+            $('.location_popup')[0].classList.toggle("show");
         }
     </script>
 
