@@ -18,8 +18,8 @@
 </div>
 
 <script>
-//    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
-    var dispatcher = new WebSocketRails('192.168.1.6:3000/websocket');
+    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
+//    var dispatcher = new WebSocketRails('192.168.1.7:3000/websocket');
     //    var dispatcher = new WebSocketRails('127.0.0.1:3000/websocket');
 
     dispatcher.on_open = function (data) {
@@ -36,6 +36,7 @@
                     .append($('<a/>', {text: message.user, 'href': 'users/' + message.user}))
                 )
         );
+        document.title = 'Nova sprava!';
     });
 
     dispatcher.bind('messages.create_fail', function (message) {

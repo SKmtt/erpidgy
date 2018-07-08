@@ -1,3 +1,5 @@
+<% unless @actual_room.nil? %>
 $('#room_chat').html("<%= escape_javascript(render partial: 'room_chat', locals: { actual_room: @actual_room} ) %>");
 $('#open_rooms').prepend("<%= escape_javascript(render partial: 'open_room', locals: { room: @actual_room}) %>");
+<% end %>
 closeOverlay();

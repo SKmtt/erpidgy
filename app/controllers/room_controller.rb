@@ -28,17 +28,20 @@ class RoomController < ApplicationController
 
   def open_room
     @actual_room = Room.find(params[:id])
-    user_room = UsersRoom.where(room_id: @actual_room, user_id: current_user).first
-    if user_room.nil?
-      user_room = UsersRoom.new
-      user_room.user_id = current_user.id
-      user_room.room_id = @actual_room.id
-      user_room.status = ''
-      user_room.can_add_place = false
+    if current_user.can_open?(@actual_room)
+      user_room = UsersRoom.where(room_id: @actual_room, user_id: current_user).first
+      if user_room.nil?
+        user_room = UsersRoom.new
+        user_room.user_id = current_user.id
+        user_room.room_id = @actual_room.id
+        user_room.status = ''
+        user_room.can_add_place = false
+      end
+      user_room.open = true
+      user_room.save
+    else
+      @actual_room = nil
     end
-    user_room.open = true
-    user_room.save
-
     respond_to do |format|
       format.js
     end
@@ -101,17 +104,19 @@ class RoomController < ApplicationController
 
   def remove_player
     @id = 0
-    user_room = UsersRoom.where(room_id: params[:room], user_id: params[:user]).first
-    unless user_room.status == 'owner'
-      @id = user_room.user.id
-      user_room.destroy
+    if current_user.has_status('owner', Room.find(params[:room]))
+      user_room = UsersRoom.where(room_id: params[:room], user_id: params[:user]).first
+      unless user_room.status == 'owner'
+        @id = user_room.user.id
+        user_room.destroy
+      end
     end
     respond_to do |format|
       format.js
     end
   end
 
-  # TODO update things below
+# TODO update things below
 
   def edit
   end
@@ -132,18 +137,20 @@ class RoomController < ApplicationController
   private
 
   def create_user_room(user, room, type)
-    user_room = UsersRoom.where(user_id: user, room_id: room).first
-    if user_room.nil?
-      user_room = UsersRoom.new
-      user_room.user = user
-      user_room.room = room
-      user_room.open = false
-      user_room.can_add_place = false
+    if current_user.has_status('owner', room)
+      user_room = UsersRoom.where(user_id: user, room_id: room).first
+      if user_room.nil?
+        user_room = UsersRoom.new
+        user_room.user = user
+        user_room.room = room
+        user_room.open = false
+        user_room.can_add_place = false
+      end
+
+      user_room.status = type
+
+      user_room.save
     end
-
-    user_room.status = type
-
-    user_room.save
   end
 
   def permit_room

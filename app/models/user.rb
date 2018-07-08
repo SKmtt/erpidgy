@@ -25,4 +25,15 @@ class User < ApplicationRecord
     id
   end
 
+  def has_status(status, room)
+    user_room = UsersRoom.where(user_id: id, room_id: room).first
+    user_room.status.eql?(status)
+  end
+
+  def can_open?(room)
+    if room.is_open == 1 || UsersRoom.where(user_id: id, room_id: room).size > 0
+      return true
+    end
+    false
+  end
 end
