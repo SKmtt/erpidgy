@@ -79,7 +79,6 @@ class RoomController < ApplicationController
     @actual_room = Room.find(params[:id])
     invited = UsersRoom.where(room_id: @actual_room).pluck(:user_id)
     @users = User.where.not(id: invited).to_json(:only => [], :methods => [:value, :label]).html_safe
-    @users = User.all.to_json(:only => [], :methods => [:value, :label]).html_safe
   end
 
   def add_player

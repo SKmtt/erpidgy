@@ -7,15 +7,7 @@
 
       <div id="messsages">
         <% actual_room.messages.reverse.each do |f| %>
-            <div class="game">
-              <br>
-              <div style="background-color: #c0c1c7">
-                <p style="font-size:small;"><%= f.body %></p>
-                <br>
-                <%= link_to f.character.name + ' ' + f.character.surname, users_path + '/' + f.character.user.username %>
-                <%= image_tag(f.character.profile_image_path, size: '50', title: f.character.full_name, alt: f.character.full_name) %>
-              </div>
-            </div>
+            <%= render partial: 'message/message', locals: {message: f} %>
         <% end %>
       </div>
       <br>
@@ -61,13 +53,38 @@
     <br>
 
     <script>
-        $("#send").click(function () {
+
+        var shiftPressed = false;
+
+        $("#send").click(sendMessage);
+
+        $("#message_body").keydown(function (e) {
+            console.log(e.which);
+           if(e.which == 16){
+               shiftPressed = true;
+           }
+        });
+
+        $("#message_body").keyup(function (e) {
+            if(e.which == 16){
+                shiftPressed = false;
+            }
+            if(e.which == 13 && !shiftPressed) {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
             var body = $("#message_body").val();
             var room = $(".actual_room")[0].id;
             var message = {
                 body: body,
                 user: '',
-                room: room
+                room: room,
+                id: '',
+                time: '',
+                fullname: '',
+                imgpath: '',
             };
 
             if (body.trim()) {
@@ -75,7 +92,7 @@
                 dispatcher.trigger('messages.create', message);
                 $("#message_body").val('');
             }
-        });
+        }
 
         function renderManagePplOverlay() {
             $.ajax({
