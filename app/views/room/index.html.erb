@@ -40,7 +40,7 @@
                 if($(this).find('div.active_room').length > 0){
                     requestMessage(message);
                 } else {
-                    $(this).addClass('message_notification');
+                    $(this).find('div.room_button').first().addClass('message_notification');
                     if(message.user != <%= current_user.id %>) {
                         $('audio')[0].play();
                         document.title = 'Nova sprava!';
