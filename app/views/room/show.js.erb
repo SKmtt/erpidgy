@@ -3,5 +3,6 @@ $('.active_room').each(function () {
   $(this).removeClass('active_room');
 });
 $('#room_tab_<%= @actual_room.id %> div.room_button').each(function () {
+  $(this).removeClass('message_notification');
   $(this).addClass('active_room');
 });
