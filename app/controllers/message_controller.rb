@@ -6,14 +6,10 @@ class MessageController < WebsocketRails::BaseController
     sprava.room = Room.find(message[:room])
 
     if sprava.save
-      message[:user] = current_user.username
-      message[:time] = sprava.created_at.strftime("%d.%m.%Y %T")
-      message[:id] = sprava.id
-      message[:fullname] = sprava.character.full_name
-      message[:imgpath] = ActionController::Base.helpers.asset_path(sprava.character.profile_image_path)
+      message[:user] = current_user.id
+      message[:body] = ''
+      message[:msg_id] = sprava.id
       broadcast_message :create_success, message, :namespace => :messages
-    else
-      broadcast_message :create_fail, message, :namespace => :messages
     end
   end
 end

@@ -1,3 +1,6 @@
+$('.active_room').each(function () {
+    $(this).removeClass('active_room');
+});
 $('#room_chat').html("<%= escape_javascript(render partial: 'room_chat', locals: { actual_room: @room} ) %>");
-$('#open_rooms').prepend("<%= escape_javascript(render partial: 'open_room', locals: { room: @room}) %>");
+$('#open_rooms').append("<%= escape_javascript(render partial: 'open_room', locals: { room: @room, active: true}) %>");
 closeOverlay();

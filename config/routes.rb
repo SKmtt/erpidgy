@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'users/invite' => 'users#invite'
 
   get 'message/create'
+  get 'message/:id' => 'room#get_message'
 
   resources :room, path: 'miestnosti', only: [:show, :index, :update, :destroy, :create]
   get 'miestnosti_list' => 'room#list'

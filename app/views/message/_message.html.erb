@@ -1,26 +1,11 @@
-<%
-  body = ''
-  time = ''
-  fullname = ''
-  username = ''
-  imgpath = ''
-  id = ''
-  unless message.nil?
-    body = message.body
-    time = message.created_at.strftime("%d.%m.%Y %T")
-    fullname = message.character.full_name
-    username = message.character.user.username
-    imgpath = message.character.profile_image_path
-    id = message.id
-  end
-%>
-<div class="message" id="message_<%= id %>">
+<div class="message" id="message_<%= message.id %>">
   <br>
   <div style="background-color: #c0c1c7">
-    <p style="font-size:small;" class="msg_body"><%= body %></p>
+    <p style="font-size:small;" class="msg_body"><%= message.body %></p>
     <br>
-    <span class="msg_time"><%= time %></span>
-    <%= link_to fullname, users_path + '/' + username, { class: 'msg_profile'} %>
-    <%= image_tag(imgpath, size: '50', title: fullname, alt: fullname, class: 'msg_picture') %>
+    <span class="msg_time"><%= message.created_at.strftime("%d.%m.%Y %T") %></span>
+    <%= link_to message.character.full_name, users_path + '/' + message.character.user.username, { class: 'msg_profile'} %>
+    <%= image_tag(message.character.profile_image_path, size: '50',
+                  title: message.character.full_name, alt: message.character.full_name, class: 'msg_picture') %>
   </div>
 </div>

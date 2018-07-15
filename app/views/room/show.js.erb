@@ -1,1 +1,7 @@
 $('#room_chat').html("<%= escape_javascript(render partial: 'room_chat', locals: { actual_room: @actual_room} ) %>");
+$('.active_room').each(function () {
+  $(this).removeClass('active_room');
+});
+$('#room_tab_<%= @actual_room.id %> div.room_button').each(function () {
+  $(this).addClass('active_room');
+});

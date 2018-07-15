@@ -17,6 +17,18 @@ class User < ApplicationRecord
     "#{id}/#{room.id}"
   end
 
+  def active_room
+    if active_room_id.nil?
+      return nil
+    end
+    UsersRoom.find(active_room_id)
+  end
+
+  def update_active_room(userroom)
+    self.active_room_id = userroom.id
+    self.save
+  end
+
   def label
     username
   end

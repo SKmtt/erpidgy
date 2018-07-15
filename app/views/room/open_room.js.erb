@@ -1,5 +1,8 @@
 <% unless @actual_room.nil? %>
+$('.active_room').each(function () {
+    $(this).removeClass('active_room');
+});
 $('#room_chat').html("<%= escape_javascript(render partial: 'room_chat', locals: { actual_room: @actual_room} ) %>");
-$('#open_rooms').prepend("<%= escape_javascript(render partial: 'open_room', locals: { room: @actual_room}) %>");
+$('#open_rooms').prepend("<%= escape_javascript(render partial: 'open_room', locals: { room: @actual_room, active: true}) %>");
 <% end %>
 closeOverlay();

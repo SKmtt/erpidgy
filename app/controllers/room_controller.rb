@@ -7,6 +7,7 @@ class RoomController < ApplicationController
 
   def show
     @actual_room = Room.find(params[:id])
+    current_user.update_active_room(UsersRoom.where(room_id: @actual_room, user_id: current_user).first)
     respond_to do |format|
       format.js
     end
@@ -34,11 +35,12 @@ class RoomController < ApplicationController
         user_room = UsersRoom.new
         user_room.user_id = current_user.id
         user_room.room_id = @actual_room.id
-        user_room.status = ''
+        user_room.status = 'spectator'
         user_room.can_add_place = false
       end
       user_room.open = true
       user_room.save
+      current_user.update_active_room(user_room)
     else
       @actual_room = nil
     end
@@ -51,6 +53,15 @@ class RoomController < ApplicationController
     user_room = UsersRoom.where(user_id: current_user, room_id: params[:id]).first
     user_room.open = false
     user_room.save
+
+    if user_room.id == current_user.active_room_id
+      active_room = UsersRoom.where(user_id: current_user, open: true).first
+      if active_room.nil?
+        current_user.update_attribute(:active_room_id, nil)
+      else
+        current_user.update_active_room(active_room)
+      end
+    end
 
     respond_to do |format|
       format.js
@@ -69,6 +80,8 @@ class RoomController < ApplicationController
     user_room.can_add_place = true
 
     user_room.save
+
+    current_user.update_active_room(user_room)
 
     respond_to do |format|
       format.js
@@ -112,6 +125,13 @@ class RoomController < ApplicationController
     end
     respond_to do |format|
       format.js
+    end
+  end
+
+  def get_message
+    @message = Message.find(params[:id])
+    unless UsersRoom.where(user_id: current_user, room_id: @message.room).length > 0
+      @message = nil
     end
   end
 

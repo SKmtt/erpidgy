@@ -1,0 +1,3 @@
+<% unless current_user.active_room_id.nil? %>
+switchRoom(<%= current_user.active_room.room_id %>);
+<% end %>
