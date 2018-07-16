@@ -4,18 +4,37 @@
     actual_room = @open_rooms.first.nil? ? nil : @open_rooms.first
   end
 %>
-<div class="row">
+<div class="chat_container col-lg-12 col-md-12 col-sm-12">
   <audio src="<%= asset_path('roblox.mp3') %>"></audio>
-  <div id="room_chat" class="col-lg-9 col-md-9 col-sm-12" style="background-color: aquamarine">
+  <div id="room_chat" class="col-lg-10 col-md-10 col-sm-12">
+    <%# TODO add style also to partial %>
     <%= render partial: 'room_chat', locals: {actual_room: actual_room.room} %>
   </div>
 
-  <div class="col-lg-3 col-md-3 col-sm-12" id="open_rooms" style="background-color: #B00100">
+  <div class="col-lg-2 col-md-2 col-sm-12" id="open_rooms">
     <% @open_rooms.each do |oi| %>
+        <%# TODO add style also to partial %>
         <%= render partial: 'open_room', locals: { room: oi.room, active: actual_room.id == oi.id} %>
     <% end %>
-    <button onclick="renderAddChatOverlay()">Add chat</button>
-    <button onclick="renderNewChatOverlay()">New game room</button>
+    
+    <div id="chat_buttons">
+      <button class="btn_basic btn_menu btn_room_tab" onclick="renderAddChatOverlay()">Pridaj</button>
+      <button class="btn_basic btn_menu btn_room_tab pull-right" onclick="renderNewChatOverlay()">Vytvor</button>
+    </div>
+    
+    <div id="online_list" class="room_tab">
+      <%= TODO implement online list %>
+      <ul type="circle" class="online_player">
+        <li>Cassa</li>
+        <li>Gema</li>
+        <li>Biely kvet</li>
+        <li class="online_spectator">Samuraj</li>
+        <li>Santiágo</li>
+        <li>Raelle</li>
+        <li class="online_spectator">Aďa</li>
+      </ul>
+    </div>
+    
   </div>
 
   <div id="overlay" style="display: none">
@@ -69,6 +88,7 @@
     }
 
     function renderNewChatOverlay() {
+        <%= TODO update partial %>
         $('#overlay_content').html("<%= escape_javascript(render partial: 'new_room', locals: { } ) %>");
         $('#overlay').css("display", "block");
     }
@@ -89,7 +109,8 @@
 
     function closeRoom(id) {
         $('#room_tab_'+id).remove();
-        var tab_element = $('.room_tab');
+        <%# TODO check if correct - online list has also room_tab class %>
+        var tab_element = $('.room_tab.row');
         if (tab_element.length == 0){
             $('#room_chat').html('');
         }
