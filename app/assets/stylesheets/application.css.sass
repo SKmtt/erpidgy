@@ -19,21 +19,66 @@
 @import "bootstrap"
 
 html
-  //background: url(dark-grey-7.jpg) no-repeat fixed
+  background: url(dark-grey-7.jpg) no-repeat fixed
 
 body
   background-color: transparent
-  //color: #c0c0c0
+  color: #c0c0c0
   font-family: "LinLibertine", serif
   font-size: 16px
   line-height: 1.5
   height: 100%
+  overflow-x: hidden
 
+.panel
+  background: transparent
+  margin: 1.7% 0 1% 10%
 
+.current_character
+  border: 5px solid
+  border-image: url(resources/images/button.png) 100 round
+  height: 11vh
+  position: static
+  margin-top: 1vh
+  margin-bottom: 1vh
+  margin-right: 2%
+
+.btn_simple
+    background: transparent
+    border: 1px solid #898989
+    padding: 4px
+    font-size: 14px
+    color: #c0c0c0
+    display: block
+    margin: auto
+    margin-bottom: 3px
+
+.btn_basic
+    border: none
+    color: #b18c5b
+    font-family: "Hamlet", serif
+    text-shadow: 2px 2px black
+    background: url('resources/images/button.png') no-repeat
+    background-size: 100%
+
+.btn_menu
+    width: 100px
+    height: 36px
+    text-align: center   
+
+::-webkit-scrollbar
+  width: 8px
+  height: 8px
+
+::-webkit-scrollbar-track
+  background: rgba(0, 0, 0, 0.1)
+
+::-webkit-scrollbar-thumb
+  background: #222222 
+ 
 @font-face
   font-family: 'LinLibertine'
   src: asset-url('LinLibertine_aDRS.ttf') format('truetype')
-
 
 @font-face
   font-family: 'Hamlet'
