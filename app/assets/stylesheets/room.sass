@@ -2,6 +2,8 @@
  * main chat window styles *
  * * * * * * * * * * * * * */
 
+<%# TODO update all resource url %>
+  
 .chat_container
   background-color: black
   height: 87vh
@@ -15,7 +17,150 @@
 
 #room_chat
   padding-right: 5px
+
+#messages
+  padding-left: 10px
+  padding-top: 0px
+  max-height: 90%
+  overflow: scroll
+  overflow-x: hidden
+
+.reply
+  margin-bottom: 8px
   
+.avatar_container
+  width: 6%
+  padding-right: 0px
+  padding-right: 0
+  margin-right: 0
+  float: left
+
+.avatar
+  border: transparent
+  border-image: url(resources/images/button.png) 100 round
+  width: 100%
+  height: 100%
+
+.reply_body{
+  width: 92%
+  background-color: #1a1b20
+  padding-top: 4px
+  padding-left: 12px
+  padding-right: 12px
+  padding-bottom: 12px
+  margin-right: 1%
+  margin-left: 1%
+  text-align: justify
+  font-size: 15.4px
+  display: inline-block
+  min-height: 110px
+
+.reply_profile
+  color: #b18c5b
+  text-align: justify
+  font-size: 16px
+
+a.reply_profile:hover
+  color: #564963
+  text-decoration: none
+
+a.reply_profile:visited, a.reply_character:focus
+  color: #b18c5b
+  text-decoration: none
+
+.reply_date
+  color: #564963
+  font-size: 12px
+
+.reply_edit
+  color: #564963
+  font-size: 12px
+  margin-left: 6px
+  cursor: pointer  
+
+.reply_plot
+  color: #b18c5b
+  text-align: justify
+  margin-top: 5px
+
+.reply_speach
+  color: #f2cb98
+  text-align: justify
+
+.reply_thought
+  color: #564963
+  text-align: justify
+
+#new_message_container
+  padding: 8px 0px 0px 0px
+  margin: 0
+  padding-left: 8.8%
+
+#message_body
+  border: 5px solid
+  border-image: url(resources/images/button.png) 100 round
+  background-color: black
+  resize: none
+  width: 100%
+  height: 35px
+  overflow: hidden
+  
+.circlebutton
+  color: #b18c5b
+  font-weight: bold
+  text-align: center
+  margin: 0% 0% 0% 0%
+
+.circlebutton .btn_icon
+  margin-left: 10px
+
+.btn_icon
+  width:50px
+  height:50px
+
+#btn_location
+  background: url('resources/images/location.png')
+  background-size: 100%
+
+#btn_manage
+  background: url('resources/images/managepeople.png')
+  background-size: 100%
+
+#btn_exit
+  background: url('resources/images/exit.png')
+  background-size: 100%
+
+#btn_export
+  background: url('resources/images/export.png')
+  background-size: 100%
+
+#btn_endgame
+  background: url('resources/images/endgame.png')
+  background-size: 100%
+
+<%# TODO fix style for popup (at least width) %>
+.location_popup
+  color: #c0c0c0
+  visibility: hidden
+  width: 80%
+  background-image: url(resources/images/dark-grey-7.jpg)
+  border: 3px solid black
+  text-align: justify
+  border-radius: 0px
+  padding: 0px 8
+  position: absolute
+  z-index: 1
+  bottom: 180%
+  right: 25%
+  font-family: "LinLibertine"
+  overflow-y:auto
+
+.location_popup p
+  padding: 10px
+
+.show
+  visibility: visible
+
 /* * * * * * * * * * * * * * * * * * *
  * side tab styles - rooms & online  *
  * * * * * * * * * * * * * * * * * * */
@@ -117,29 +262,3 @@
   z-index: 1
   bottom: 1800%
   right: 25%
-  
-  
-  
-<%# TODO below style is not updated %>
-
-.location_popup
-  visibility: hidden
-  width: 400px
-  background-color: #555
-  color: #fff
-  text-align: justify
-  border-radius: 6px
-  padding: 8px 0
-  position: absolute
-  z-index: 1
-  bottom: 100%
-  right: 50%
-
-.location_popup p
-  padding: 10px
-
-.location_popup button
-  color: black
-
-.show
-  visibility: visible
