@@ -3,29 +3,32 @@
     <% is_player = current_user.has_status('player', actual_room) %>
     <% is_global_chat = actual_room.id == 1 %>
     <div id="<%= actual_room.id %>" class="actual_room">
-      <h3><%= actual_room.name %></h3>
-
-      <div id="messsages">
+      <div id="messages">
         <% actual_room.messages.reverse.each do |f| %>
             <%= render partial: 'message/message', locals: {message: f} %>
         <% end %>
       </div>
       <br>
       <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-9" style="background-color: #99b058">
+        <div id="new_message_container" class="col-lg-8 col-md-8 col-sm-8">
           <% if is_owner || is_player || is_global_chat %>
-              Sprava:<br>
               <textarea name="message[body]" id="message_body"></textarea>
-              <button id="send">Pošli</button>
           <% end %>
         </div>
         <% if actual_room.id != 1 %>
-            <div class="col-lg-3 col-md-3 col-sm-3" style="background-color: #b87186">
+            <div class="circlebutton col-lg-4 col-md-4 col-sm-4">
+              <button class="btn_basic btn_icon" id="btn_location" onclick="toggleLocationPopup()"></button>
               <% if is_owner %>
-                  <button onclick="renderManagePplOverlay()">Manage ppl</button>
+                  <button class="btn_basic btn_icon" id="btn_manage" onclick="renderManagePplOverlay()"></button>
               <% end %>
-              <div class="popup_container">
-                <button onclick="toggleLocationPopup()">Show location</button>
+              <% if is_player || is_owner %>
+                    <button class="btn_basic btn_icon" id="btn_export"></button>
+                <% if is_player %>
+                    <button class="btn_basic btn_icon" id="btn_exit"></button>
+                <% end %>   
+                    <button class="btn_basic btn_icon" id="btn_endgame"></button>
+              <% end %>
+                
                 <div class="location_popup">
                   <% if actual_room.location.nil? %>
                       <h4 align="center">No location</h4>
@@ -35,22 +38,14 @@
                       <p><%= actual_room.location.description %></p>
                   <% end %>
                   <% if is_owner || is_player %>
-                      <button onclick="renderManageLocationOverlay()">Choose new location</button>
+                      <button class="btn_simple" onclick="renderManageLocationOverlay()">Pridaj novú lokáciu</button>
                   <% end %>
                 </div>
-              </div>
-              <% if is_player || is_owner %>
-                  <button>Export game</button>
-                  <button>End game</button>
-              <% end %>
-              <% if is_player %>
-                  <button>Leave game</button>
-              <% end %>
+                
             </div>
         <% end %>
       </div>
     </div>
-    <br>
 
     <script>
 
