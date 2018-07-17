@@ -4,16 +4,15 @@
     actual_room = @open_rooms.first.nil? ? nil : @open_rooms.first
   end
 %>
+<%# TODO update also all js responses %>
 <div class="chat_container col-lg-12 col-md-12 col-sm-12">
   <audio src="<%= asset_path('roblox.mp3') %>"></audio>
   <div id="room_chat" class="col-lg-10 col-md-10 col-sm-12">
-    <%# TODO add style also to partial %>
     <%= render partial: 'room_chat', locals: {actual_room: actual_room.room} %>
   </div>
 
   <div class="col-lg-2 col-md-2 col-sm-12" id="open_rooms">
     <% @open_rooms.each do |oi| %>
-        <%# TODO add style also to partial %>
         <%= render partial: 'open_room', locals: { room: oi.room, active: actual_room.id == oi.id} %>
     <% end %>
     
