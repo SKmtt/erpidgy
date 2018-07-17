@@ -1,11 +1,15 @@
-<div class="message" id="message_<%= message.id %>">
-  <br>
-  <div style="background-color: #c0c1c7">
-    <p style="font-size:small;" class="msg_body"><%= message.body %></p>
-    <br>
-    <span class="msg_time"><%= message.created_at.strftime("%d.%m.%Y %T") %></span>
-    <%= link_to message.character.full_name, users_path + '/' + message.character.user.username, { class: 'msg_profile'} %>
-    <%= image_tag(message.character.profile_image_path, size: '50',
-                  title: message.character.full_name, alt: message.character.full_name, class: 'msg_picture') %>
+<div class="reply" id="message_<%= message.id %>">
+  <div class="avatar_container">
+        <%= image_tag(message.character.profile_image_path,
+                  title: message.character.full_name, alt: message.character.full_name, class: 'avatar') %>
+  </div>
+  <div class="reply_body">
+    <%= link_to message.character.full_name, users_path + '/' + message.character.user.username, { class: 'reply_profile'} %>
+    <%# TODO fix date format and timezone %>
+    <span class="reply_date"><%= message.created_at.strftime("%d.%m.%Y %T") %></span>
+    <span class="reply_edit pull-right">Zmazať</span>
+    <span class="reply_edit pull-right">Upraviť</span>
+    <%# TODO create message body raw2display conversion method inside Message model, use reply_speach and reply_thought class %>
+    <p class="reply_plot"><%= message.body %></p>
   </div>
 </div>
