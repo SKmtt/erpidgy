@@ -17,10 +17,10 @@
       <% current_user.characters.each do |c| %>
           <% if current_user.current_character_id == c.id %>
               <%# TODO changed activeav id to class, change character id from plain id to something to work with %>
-              <%= image_tag(c.profile_image_path, size: '60', title: c.full_name, alt: c.full_name, class: 'character_image current_character', id: c.id) %>
+              <%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image current_character', id: c.id) %>
           <% else %>
               <%# TODO do something with other characters %>
-              <%= image_tag(c.profile_image_path, size: '40', title: c.full_name, alt: c.full_name, class: 'character_image', id: c.id) %>
+              <%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image', id: c.id) %>
           <% end %>
       <% end %>
 

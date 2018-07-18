@@ -17,12 +17,12 @@
     <% end %>
     
     <div id="chat_buttons">
-      <button class="btn_basic btn_menu btn_room_tab" onclick="renderAddChatOverlay()">Pridaj</button>
-      <button class="btn_basic btn_menu btn_room_tab pull-right" onclick="renderNewChatOverlay()">Vytvor</button>
+      <button class="btn_room_tab btn_basic" onclick="renderAddChatOverlay()">Pridaj</button>
+      <button class="btn_room_tab btn_basic pull-right" onclick="renderNewChatOverlay()">Vytvor</button>
     </div>
     
     <div id="online_list" class="room_tab">
-      <%= TODO implement online list %>
+      <%# TODO implement online list %>
       <ul type="circle" class="online_player">
         <li>Cassa</li>
         <li>Gema</li>
@@ -43,8 +43,8 @@
 </div>
 
 <script>
-//    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
-    var dispatcher = new WebSocketRails('192.168.1.11:3000/websocket');
+    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
+//    var dispatcher = new WebSocketRails('192.168.1.11:3000/websocket');
 //    var dispatcher = new WebSocketRails('127.0.0.1:3000/websocket');
 
     dispatcher.on_open = function (data) {
@@ -88,7 +88,7 @@
     }
 
     function renderNewChatOverlay() {
-        <%= TODO update partial %>
+        <%# TODO update partial %>
         $('#overlay_content').html("<%= escape_javascript(render partial: 'new_room', locals: { } ) %>");
         $('#overlay').css("display", "block");
     }

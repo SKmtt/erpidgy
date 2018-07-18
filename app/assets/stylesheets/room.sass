@@ -8,7 +8,7 @@
   background-color: black
   height: 87vh
   border: 2px solid
-  border-image: url(resources/images/button.png) 100 round
+  border-image: url(button.png) 100 round
   padding-top: 8px
 
 #room_chat, .actual_room
@@ -20,7 +20,7 @@
 
 #messages
   padding-left: 10px
-  padding-top: 0px
+  padding-top: 0
   max-height: 90%
   overflow: scroll
   overflow-x: hidden
@@ -30,24 +30,20 @@
   
 .avatar_container
   width: 6%
-  padding-right: 0px
   padding-right: 0
   margin-right: 0
   float: left
 
 .avatar
   border: transparent
-  border-image: url(resources/images/button.png) 100 round
+  border-image: url(button.png) 100 round
   width: 100%
   height: 100%
 
-.reply_body{
+.reply_body
   width: 92%
   background-color: #1a1b20
-  padding-top: 4px
-  padding-left: 12px
-  padding-right: 12px
-  padding-bottom: 12px
+  padding: 4px 12px 12px
   margin-right: 1%
   margin-left: 1%
   text-align: justify
@@ -92,13 +88,12 @@ a.reply_profile:visited, a.reply_character:focus
   text-align: justify
 
 #new_message_container
-  padding: 8px 0px 0px 0px
   margin: 0
-  padding-left: 8.8%
+  padding: 8px 0 0 8.8%
 
 #message_body
   border: 5px solid
-  border-image: url(resources/images/button.png) 100 round
+  border-image: url(button.png) 100 round
   background-color: black
   resize: none
   width: 100%
@@ -109,33 +104,33 @@ a.reply_profile:visited, a.reply_character:focus
   color: #b18c5b
   font-weight: bold
   text-align: center
-  margin: 0% 0% 0% 0%
+  margin: 0 0 0 0
 
 .circlebutton .btn_icon
   margin-left: 10px
 
 .btn_icon
-  width:50px
-  height:50px
+  width: 50px
+  height: 50px
 
 #btn_location
-  background: url('resources/images/location.png')
+  background: url('location.png')
   background-size: 100%
 
 #btn_manage
-  background: url('resources/images/managepeople.png')
+  background: url('managepeople.png')
   background-size: 100%
 
 #btn_exit
-  background: url('resources/images/exit.png')
+  background: url('exit.png')
   background-size: 100%
 
 #btn_export
-  background: url('resources/images/export.png')
+  background: url('export.png')
   background-size: 100%
 
 #btn_endgame
-  background: url('resources/images/endgame.png')
+  background: url('endgame.png')
   background-size: 100%
 
 /* <%# TODO fix style for popup (at least width) %> */
@@ -143,17 +138,17 @@ a.reply_profile:visited, a.reply_character:focus
   color: #c0c0c0
   visibility: hidden
   width: 80%
-  background-image: url(resources/images/dark-grey-7.jpg)
+  background-image: url(dark-grey-7.jpg)
   border: 3px solid black
   text-align: justify
-  border-radius: 0px
-  padding: 0px 8
+  border-radius: 0
+  padding: 0
   position: absolute
   z-index: 1
   bottom: 180%
   right: 25%
-  font-family: "LinLibertine"
-  overflow-y:auto
+  font-family: "LinLibertine", serif
+  overflow-y: auto
 
 .location_popup p
   padding: 10px
@@ -191,7 +186,7 @@ a.reply_profile:visited, a.reply_character:focus
   background-color: black
   border: 2px solid transparent
   padding: 1%
-  border-image: url(resources/images/button.png) 20 round
+  border-image: url(button.png) 20 round
   max-width: 95%
   color: #b18c5b
   font-weight: bold
@@ -210,15 +205,17 @@ a.reply_profile:visited, a.reply_character:focus
 .close_room
   width: 5%
   align-content: center
-  padding: 0px
+  padding: 0
   color: #b18c5b
   font-size: 80%
-  font-family: "Hamlet"
+  font-family: "Hamlet", serif
   cursor: pointer
 
 .btn_room_tab
-  margin-left: 0px
-  margin-right: 0px
+  margin-left: 0
+  margin-right: 0
+  height: 36px
+  text-align: center
   width: 49%
   background-size: 100% 100%
 
@@ -254,10 +251,8 @@ a.reply_profile:visited, a.reply_character:focus
   left: 40%
   width: 25%
   height: 22%
-  padding: 2px
-  padding-left: 6px
-  background-color: #e0e0e0
-  background-image: url(resources/images/dark-grey-7.jpg)
+  padding: 2px 2px 2px 6px
+  background: #e0e0e0 url(dark-grey-7.jpg)
   border: 3px solid black
   z-index: 1
   bottom: 1800%
