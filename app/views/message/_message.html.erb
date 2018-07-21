@@ -5,8 +5,7 @@
   </div>
   <div class="reply_body">
     <%= link_to message.character.full_name, users_path + '/' + message.character.user.username, { class: 'reply_profile'} %>
-    <%# TODO fix date format and timezone %>
-    <span class="reply_date"><%= message.created_at.strftime("%d.%m.%Y %T") %></span>
+    <span class="reply_date"><%= message.created_at.utc.getlocal.strftime("%d.%m.%Y %T") %></span>
     <span class="reply_edit pull-right">Zmazať</span>
     <span class="reply_edit pull-right">Upraviť</span>
     <%# TODO create message body raw2display conversion method inside Message model, use reply_speach and reply_thought class %>
