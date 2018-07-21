@@ -80,6 +80,10 @@
         });
     }
 
+    dispatcher.bind('messages.delete_success', function (message) {
+        $('#message_' + message.id).remove();
+    });
+
     function renderAddChatOverlay() {
         $.ajax({
             type: 'GET',

@@ -1,13 +1,15 @@
 <div class="reply" id="message_<%= message.id %>">
   <div class="avatar_container">
-        <%= image_tag(message.character.profile_image_path,
+    <%= image_tag(message.character.profile_image_path,
                   title: message.character.full_name, alt: message.character.full_name, class: 'avatar') %>
   </div>
   <div class="reply_body">
-    <%= link_to message.character.full_name, users_path + '/' + message.character.user.username, { class: 'reply_profile'} %>
+    <%= link_to message.character.full_name, users_path + '/' + message.character.user.username, {class: 'reply_profile'} %>
     <span class="reply_date"><%= message.created_at.utc.getlocal.strftime("%d.%m.%Y %T") %></span>
-    <span class="reply_edit pull-right">Zmazať</span>
-    <span class="reply_edit pull-right">Upraviť</span>
+    <%# TODO allow also owner and admin deletion %>
+    <% if current_user.id == message.character.user.id %>
+        <span class="reply_edit pull-right" onclick="deleteMessage(<%= message.id %>)">Zmazať</span>
+    <% end %>
     <%# TODO create message body raw2display conversion method inside Message model, use reply_speach and reply_thought class %>
     <p class="reply_plot"><%= message.body %></p>
   </div>

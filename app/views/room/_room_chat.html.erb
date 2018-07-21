@@ -85,6 +85,14 @@
             }
         }
 
+        function deleteMessage(id) {
+            var message = {
+                id: id
+            };
+            console.log('Deleting message: ' + id);
+            dispatcher.trigger('messages.delete', message);
+        }
+
         function renderManagePplOverlay() {
             $.ajax({
                 type: 'GET',

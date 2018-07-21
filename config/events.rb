@@ -14,5 +14,6 @@ WebsocketRails::EventMap.describe do
 
   namespace :messages do
     subscribe :create, :to => MessageController, :with_method => :create
+    subscribe :delete, :to => MessageController, :with_method => :delete
   end
 end
