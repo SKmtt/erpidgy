@@ -1,40 +1,236 @@
-// Place all the styles related to the room controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/* * * * * * * * * * * * * *
+ * main chat window styles *
+ * * * * * * * * * * * * * */
 
-#send
-  color: coral
-  width: 100px
-  height: 30px
-  background: image_url('button.png') no-repeat
+.chat_container
+  background-color: black
+  height: 87vh
+  border: 2px solid
+  border-image: url(button.png) 100 round
+  padding-top: 8px
+
+#room_chat, .actual_room
+  height: 95%
+  padding-top: 0
+
+#room_chat
+  padding-right: 5px
+
+#messages
+  padding-left: 10px
+  padding-top: 0
+  max-height: 90%
+  overflow: scroll
+  overflow-x: hidden
+
+.reply
+  margin-bottom: 8px
+  
+.avatar_container
+  width: 6%
+  padding-right: 0
+  margin-right: 0
+  float: left
+
+.avatar
+  border: transparent
+  border-image: url(button.png) 100 round
+  width: 100%
+  height: 100%
+
+.reply_body
+  width: 92%
+  background-color: #1a1b20
+  padding: 4px 12px 12px
+  margin-right: 1%
+  margin-left: 1%
+  text-align: justify
+  font-size: 15.4px
+  display: inline-block
+  min-height: 110px
+
+.reply_profile
+  color: #b18c5b
+  text-align: justify
+  font-size: 16px
+
+a.reply_profile:hover
+  color: #564963
+  text-decoration: none
+
+a.reply_profile:visited, a.reply_character:focus
+  color: #b18c5b
+  text-decoration: none
+
+.reply_date
+  color: #564963
+  font-size: 12px
+
+.reply_edit
+  color: #564963
+  font-size: 12px
+  margin-left: 6px
+  cursor: pointer  
+
+.reply_plot
+  color: #b18c5b
+  text-align: justify
+  margin-top: 5px
+
+.reply_speach
+  color: #f2cb98
+  text-align: justify
+
+.reply_thought
+  color: #564963
+  text-align: justify
+
+#new_message_container
+  margin: 0
+  padding: 8px 0 0 8.8%
+
+#message_body
+  border: 5px solid
+  border-image: url(button.png) 100 round
+  background-color: black
+  resize: none
+  width: 100%
+  height: 35px
+  overflow: hidden
+  
+.circlebutton
+  color: #b18c5b
+  font-weight: bold
+  text-align: center
+  margin: 0 0 0 0
+
+.circlebutton .btn_icon
+  margin-left: 10px
+
+.btn_icon
+  width: 50px
+  height: 50px
+
+#btn_location
+  background: url('location.png')
   background-size: 100%
 
+#btn_manage
+  background: url('managepeople.png')
+  background-size: 100%
+
+#btn_exit
+  background: url('exit.png')
+  background-size: 100%
+
+#btn_export
+  background: url('export.png')
+  background-size: 100%
+
+#btn_endgame
+  background: url('endgame.png')
+  background-size: 100%
+
+/* <%# TODO fix style for popup (at least width) %> */
+.location_popup
+  color: #c0c0c0
+  visibility: hidden
+  width: 80%
+  background-image: url(dark-grey-7.jpg)
+  border: 3px solid black
+  text-align: justify
+  border-radius: 0
+  padding: 0
+  position: absolute
+  z-index: 1
+  bottom: 180%
+  right: 25%
+  font-family: "LinLibertine", serif
+  overflow-y: auto
+
+.location_popup p
+  padding: 10px
+
+.show
+  visibility: visible
+
+/* * * * * * * * * * * * * * * * * * *
+ * side tab styles - rooms & online  *
+ * * * * * * * * * * * * * * * * * * */
+
+#open_rooms
+  padding-right: 4px
+  padding-left: 0
+  padding-top: 0
+  margin-right: 0
+  max-height: 100%
+  overflow: scroll
+  overflow-x: hidden
+
+#chat_buttons
+  max-width: 95%
+  margin-top: 3px
+
+#online_list
+  margin-top: 3px
+  overflow-x: hidden
 
 .room_tab.row
   margin-left: 0
   margin-right: 0
 
 .room_tab
-  width: 100%
   margin-bottom: 2px
+  background-color: black
+  border: 2px solid transparent
+  padding: 1%
+  border-image: url(button.png) 20 round
+  max-width: 95%
+  color: #b18c5b
+  font-weight: bold
+  text-align: center
+  cursor: pointer
 
 .room_button
-  width: 90%
-  background-color: blueviolet
-
+  width: 95%
+  
 .active_room
-  color: red
-
+  text-shadow: 0 0 10px #d2a56a
+  
 .message_notification
-  color: #c7a448
-
+  text-decoration: underline
+  
 .close_room
-  width: 9%
-  background-color: aqua
+  width: 5%
+  align-content: center
+  padding: 0
+  color: #b18c5b
+  font-size: 80%
+  font-family: "Hamlet", serif
+  cursor: pointer
 
-#open_rooms
-  padding-right: 0
-  padding-left: 0
+.btn_room_tab
+  margin-left: 0
+  margin-right: 0
+  height: 36px
+  text-align: center
+  width: 49%
+  background-size: 100% 100%
+
+.online_player
+  color: #b18c5b
+  text-align: center
+  margin-top: 10px
+  padding-left: 22px
+  padding-right: 20px
+
+.online_spectator
+  color: #765e3d
+  text-align: center
+
+/* * * * * * * * * * * * * * * * * * *
+ * style for overlay and its content *
+ * * * * * * * * * * * * * * * * * * */
 
 #overlay
   position: fixed
@@ -49,31 +245,13 @@
 
 #overlay_content
   position: absolute
-  top: 7%
-  left: 10%
-  width: 80%
-  height: 88%
-  padding: 25px 10px 25px 10px
-  background-color: #e0e0e0
-
-.location_popup
-  visibility: hidden
-  width: 400px
-  background-color: #555
-  color: #fff
-  text-align: justify
-  border-radius: 6px
-  padding: 8px 0
-  position: absolute
+  top: 27%
+  left: 40%
+  width: 25%
+  height: 22%
+  padding: 2px 2px 2px 6px
+  background: #e0e0e0 url(dark-grey-7.jpg)
+  border: 3px solid black
   z-index: 1
-  bottom: 100%
-  right: 50%
-
-.location_popup p
-  padding: 10px
-
-.location_popup button
-  color: black
-
-.show
-  visibility: visible
+  bottom: 1800%
+  right: 25%

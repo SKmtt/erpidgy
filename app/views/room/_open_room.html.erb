@@ -1,8 +1,9 @@
+<%# TODO update also js responses from server %>
 <div id="room_tab_<%= room.id %>" class="room_tab row">
   <div class="<%= active ? 'active_room ' : '' %>room_button col-lg-10 col-md-10 col-sm-10" onclick="switchRoom(<%= room.id %>)">
     <%= room.name %>
   </div>
   <div class="close_room col-lg-2 col-md-2 col-sm-2" onclick="closeRoom(<%= room.id %>)">
-    X
+    x
   </div>
 </div>

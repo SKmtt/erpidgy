@@ -135,22 +135,10 @@ class RoomController < ApplicationController
     end
   end
 
-# TODO update things below
-
   def edit
   end
 
   def destroy
-  end
-
-  def saveMessage
-    message = Message.new(permit_message)
-    message.character = current_user.characters.first
-    message.scope = 'global'
-
-    if message.save
-      redirect_to request.url
-    end
   end
 
   private
