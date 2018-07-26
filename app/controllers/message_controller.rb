@@ -1,4 +1,5 @@
 class MessageController < WebsocketRails::BaseController
+
   def create
     sprava = Message.new
     sprava.body = message[:body]
@@ -19,6 +20,18 @@ class MessageController < WebsocketRails::BaseController
     if !msg.nil? && current_user.id == msg.character.user.id
       if msg.destroy
         broadcast_message :delete_success, message, :namespace => :messages
+      end
+    end
+  end
+
+  def update
+    msg = Message.find(message[:id])
+
+    if !msg.nil? && current_user.id == msg.character.user.id
+      msg.body = message[:body]
+      if msg.save
+        message[:body] = ''
+        broadcast_message :update_success, message, :namespace => :messages
       end
     end
   end

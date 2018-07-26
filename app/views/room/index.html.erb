@@ -8,19 +8,21 @@
 <div class="chat_container col-lg-12 col-md-12 col-sm-12">
   <audio src="<%= asset_path('roblox.mp3') %>"></audio>
   <div id="room_chat" class="col-lg-10 col-md-10 col-sm-12">
-    <%= render partial: 'room_chat', locals: {actual_room: actual_room.room} %>
+    <% unless actual_room.nil? %>
+      <%= render partial: 'room_chat', locals: {actual_room: actual_room.room} %>
+    <% end %>
   </div>
 
   <div class="col-lg-2 col-md-2 col-sm-12" id="open_rooms">
     <% @open_rooms.each do |oi| %>
         <%= render partial: 'open_room', locals: { room: oi.room, active: actual_room.id == oi.id} %>
     <% end %>
-    
+
     <div id="chat_buttons">
       <button class="btn_room_tab btn_basic" onclick="renderAddChatOverlay()">Pridaj</button>
       <button class="btn_room_tab btn_basic pull-right" onclick="renderNewChatOverlay()">Vytvor</button>
     </div>
-    
+
     <div id="online_list" class="room_tab">
       <%# TODO implement online list %>
       <ul type="circle" class="online_player">
@@ -33,7 +35,7 @@
         <li class="online_spectator">Aďa</li>
       </ul>
     </div>
-    
+
   </div>
 
   <%# TODO update overlay content and styles %>
@@ -43,8 +45,8 @@
 </div>
 
 <script>
-//    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
-    var dispatcher = new WebSocketRails('192.168.1.11:3000/websocket');
+    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
+//    var dispatcher = new WebSocketRails('192.168.1.11:3000/websocket');
 //    var dispatcher = new WebSocketRails('127.0.0.1:3000/websocket');
 
     dispatcher.on_open = function (data) {
@@ -52,12 +54,11 @@
     };
 
     dispatcher.bind('messages.create_success', function (message) {
-        console.log('msg success');
         var roomid = 'room_tab_' + message.room;
         $('.room_tab').each(function () {
             if($(this).attr('id') == roomid){
                 if($(this).find('div.active_room').length > 0){
-                    requestMessage(message);
+                    requestMessage(message.msg_id);
                 } else {
                     $(this).find('div.room_button').first().addClass('message_notification');
                     if(message.user != <%= current_user.id %>) {
@@ -69,20 +70,22 @@
         });
     });
 
-    dispatcher.bind('messages.create_fail', function (message) {
-        console.log('message failed');
-    });
-
-    function requestMessage(message) {
-        $.ajax({
-            type: 'GET',
-            url: 'message/'+message.msg_id
-        });
-    }
-
     dispatcher.bind('messages.delete_success', function (message) {
         $('#message_' + message.id).remove();
     });
+
+    dispatcher.bind('messages.update_success', function (message) {
+        if($('#message_' + message.id).length > 0){
+          requestMessage(message.id)
+        }
+    });
+
+    function requestMessage(id) {
+        $.ajax({
+            type: 'GET',
+            url: 'message/'+id
+        });
+    }
 
     function renderAddChatOverlay() {
         $.ajax({
@@ -121,6 +124,14 @@
         $.ajax({
             type: 'POST',
             url: '<%= miestnosti_list_path %>/' + id
+        });
+    }
+
+    function addEditables() {
+        $(".reply").each(function () {
+            if($(this).hasClass('user_' + '<%= current_user.id %>')){
+                addEditableForReply(this.id);
+            }
         });
     }
 </script>

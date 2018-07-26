@@ -1,4 +1,4 @@
-<div class="reply" id="message_<%= message.id %>">
+<div class="reply user_<%= message.character.user.id %>" id="message_<%= message.id %>">
   <div class="avatar_container">
     <%= image_tag(message.character.profile_image_path,
                   title: message.character.full_name, alt: message.character.full_name, class: 'avatar') %>
