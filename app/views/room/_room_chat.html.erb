@@ -26,7 +26,7 @@
                 <% if is_player %>
                     <button class="btn_basic btn_icon" id="btn_exit"></button>
                 <% end %>   
-                    <button class="btn_basic btn_icon" id="btn_endgame"></button>
+                    <button class="btn_basic btn_icon" id="btn_endgame" onclick="endGame()"></button>
               <% end %>
                 
                 <div class="location_popup">
@@ -108,6 +108,13 @@
 
         function toggleLocationPopup() {
             $('.location_popup')[0].classList.toggle("show");
+        }
+
+        function endGame() {
+            var game = {
+                id: <%= actual_room.id %>
+            };
+            dispatcher.trigger('games.end_game', game);
         }
     </script>
 

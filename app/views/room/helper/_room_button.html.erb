@@ -1,0 +1,10 @@
+<% if room.is_active %>
+    <% puts room.is_active.to_s + ' ' + room.name %>
+    <%
+      onclick = ''
+      if can_open
+        onclick = 'openRoom(' + room.id.to_s + ')'
+      end
+    %>
+    <button onclick="<%= onclick %>"><%= room.name %></button><br>
+<% end %>

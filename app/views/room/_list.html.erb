@@ -4,22 +4,22 @@
       <%# TODO create template for room buttons or whatever %>
       You can play:<br>
       <% @room_invited.each do |r| %>
-        <button onclick="openRoom(<%= r.room.id %>)"><%= r.room.name %></button><br>
+          <%= render partial: 'room/helper/room_button', locals: {room: r.room, can_open: true} %>
       <% end %>
       <br>
       You are invited to spectate:<br>
       <% @room_spectator.each do |r| %>
-          <button onclick="openRoom(<%= r.room.id %>)"><%= r.room.name %></button><br>
+          <%= render partial: 'room/helper/room_button', locals: {room: r.room, can_open: true} %>
       <% end %>
       <br>
       Public games:<br>
       <% @room_open.each do |r| %>
-          <button onclick="openRoom(<%= r.id %>)"><%= r.name %></button><br>
+          <%= render partial: 'room/helper/room_button', locals: {room: r, can_open: true} %>
       <% end %>
       <br>
       You cannot play:<br>
       <% @room_closed.each do |r| %>
-          <button><%= r.name %></button><br>
+          <%= render partial: 'room/helper/room_button', locals: {room: r, can_open: false} %>
       <% end %>
 
     </div>

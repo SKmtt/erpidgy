@@ -35,4 +35,26 @@ class MessageController < WebsocketRails::BaseController
       end
     end
   end
+
+  def end_game
+    userroom = UsersRoom.where(user_id: current_user, room_id: message[:id]).first
+    if userroom.status.eql?('owner')
+      room = userroom.room
+      room.is_active = false
+
+      UsersRoom.where(room_id: message[:id]).each do |r|
+        r.open = false
+        r.save
+      end
+
+      User.where(active_room_id: message[:id]).each do |u|
+        u.active_room_id = null
+        u.save
+      end
+
+      if room.save
+        broadcast_message :end_game_success, message, :namespace => :games
+      end
+    end
+  end
 end
