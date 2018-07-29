@@ -1,7 +1,6 @@
 <div id="add_chat">
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12">
-      <%# TODO create template for room buttons or whatever %>
       You can play:<br>
       <% @room_invited.each do |r| %>
           <%= render partial: 'room/helper/room_button', locals: {room: r.room, can_open: true} %>
@@ -24,6 +23,11 @@
 
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12">
+      History:<br>
+      <% @history.each do |r| %>
+          <%= render partial: 'room/helper/closed_room_button', locals: {room: r} %>
+      <% end %>
+      <br>
     </div>
     <button onclick="closeOverlay()">Zavriet</button>
   </div>

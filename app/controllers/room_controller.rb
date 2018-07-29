@@ -16,10 +16,12 @@ class RoomController < ApplicationController
   def list
     all_open = current_user.users_rooms.where(open: true).pluck(:room_id)
     invited = current_user.users_rooms.where(status: %w(player owner spectator)).pluck(:room_id)
+    closed = current_user.users_rooms.where(status: %w(player owner)).pluck(:room_id)
     @room_open = Room.where(is_open: 1).where.not(id: all_open)
     @room_invited = current_user.users_rooms.where(status: %w(player owner), open: false)
     @room_spectator = current_user.users_rooms.where(status: 'spectator', open: false)
     @room_closed = Room.where(is_open: 0).where.not(id: invited)
+    @history = Room.where(id: closed).where(is_active: false)
     # TODO filter already open chat, blacklisted persons by you and you blacklisted by person
     # @player_list
     respond_to do |format|
@@ -30,6 +32,9 @@ class RoomController < ApplicationController
   def open_room
     @actual_room = Room.find(params[:id])
     if current_user.can_open?(@actual_room)
+      # TODO authoroze user for reopen
+      @actual_room.is_active = true
+      @actual_room.save
       user_room = UsersRoom.where(room_id: @actual_room, user_id: current_user).first
       if user_room.nil?
         user_room = UsersRoom.new
