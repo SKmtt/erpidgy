@@ -10,10 +10,6 @@ function createAvailableUsers(users, type) {
     });
 }
 
-$(document).ready(function () {
-    addEditables();
-});
-
 function addEditableForReply(element) {
     var label = $('#'+element).find('p.reply_plot:first');
     label.after('<input type ="text" style="display:none;" />');

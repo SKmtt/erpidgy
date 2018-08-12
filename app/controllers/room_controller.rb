@@ -169,8 +169,4 @@ class RoomController < ApplicationController
     params.require(:room).permit(:name, :description, :is_open)
   end
 
-  def permit_message
-    params.require(:message).permit(:body)
-  end
-
 end

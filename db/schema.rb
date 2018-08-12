@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180727145656) do
+ActiveRecord::Schema.define(version: 20180812142108) do
 
   create_table "characters", force: :cascade do |t|
     t.string  "name"
@@ -91,6 +91,9 @@ ActiveRecord::Schema.define(version: 20180727145656) do
     t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
     t.integer  "active_room_id"
+    t.string   "display_name"
+    t.string   "status"
+    t.string   "status_text"
     t.index ["active_room_id"], name: "index_users_on_active_room_id"
     t.index ["current_character_id"], name: "index_users_on_current_character_id"
     t.index ["email"], name: "index_users_on_email", unique: true

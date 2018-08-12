@@ -48,4 +48,17 @@ class User < ApplicationRecord
     end
     false
   end
+
+  def status_to_display
+    case status
+      when 'active'
+        return 'Aktívny'
+      when 'inactive'
+        return 'Neaktívny'
+      when 'lfp'
+        return 'Hľadám spoluhráčov'
+      else
+        return ''
+    end
+  end
 end

@@ -1,54 +1,171 @@
-<h2>Hrac <%= @user.username %></h2>
+<%# TODO allow also admin to edit %>
+<% can_edit = current_user.id == @user.id ? true : false %>
+<div class="page_container col-lg-12 col-md-12 col-sm-12">
 
-
-
-<div id="profile">
-  <% if current_user.id == @user.id %>
-      <button onclick="openNewForm()" id="new-button" class="btn btn-default btn-circle btn-lg">Ziadost o novu postavu
-      </button>
-  <% end %>
-  <h3>Profil:</h3>
-  <div id="profile" class="jumbotron">
-    <p><%= @user.profile.description %></p>
-    <button>Edit</button>
-    <button style="display: none;">Save</button>
-    <button style="display: none;">Cancel</button>
+  <div class="profile_container">
+    <h3 id="display_name"><%= @user.display_name.blank? ? @user.username : @user.display_name %></h3>
+    <% if can_edit %>
+        <select id="status_select" name="status" onchange="updateStatus();">
+          <option value="active" <%= @user.status == 'active' ? 'selected' : '' %>>Aktívny</option>
+          <option value="inactive" <%= @user.status == 'inactive' ? 'selected' : '' %>>Neaktívny</option>
+          <option value="lfp" <%= @user.status == 'lfp' ? 'selected' : '' %>>Hľadám spoluhráčov</option>
+        </select>
+    <% else %>
+        <label><%= @user.status_to_display %></label>
+    <% end %>
+    <br>
+    <label>Last online placeholder</label>
+    <br>
+    <% status_text = @user.status_text.blank? && can_edit ? '(Pridaj vlastny status)' : @user.status_text %>
+    <label id="status_text"><%= status_text %></label>
   </div>
-</div>
 
-<div id="characters" style="background-color: #99b058">
-  <h3>Zoznam postav:</h3>
-  <% @user.characters.each do |c| %>
-      <%= render partial: 'characters/character', locals: {character: c} %>
-  <% end %>
-</div>
+  <br>
 
-<% if current_user.id == @user.id %>
-    <div id="new-character" style="display: none;">
-      <h4>Ziadost o novu postavu:</h4>
-      <%= form_for :character, url: character_path, remote: true, html: {id: 'new-form'} do |f| %>
-
-          <%= f.label :meno %><br>
-          <%= f.text_field :name %><br>
+  <div class="character_list">
+    <%# TODO filter not accepted %>
+    <% @user.characters.each do |c| %>
+        <div class="character_link">
+          <label><%= c.full_name %></label>
           <br>
+          <%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image', id: c.id) %>
+        </div>
+    <% end %>
+  </div>
 
-          <%= f.label :priezvisko %><br>
-          <%= f.text_field :surname %><br>
-          <br>
+  <!--
+  <%# TODO copy content to new place %>
+  <h2>Hrac <%= @user.username %></h2>
 
-          <%= f.label :popis %><br>
-          <%= f.text_area :description %><br>
-          <br>
-
-          <%= f.submit 'Odoslat', :class => "btn btn-default btn-circle btn-lg" %>
-
-      <% end %>
-      <button onclick="closeNewForm()" class="btn btn-default btn-circle btn-lg">Zrusit</button>
+  <div id="profile">
+    <% if current_user.id == @user.id %>
+        <button onclick="openNewForm()" id="new-button" class="btn btn-default btn-circle btn-lg">Ziadost o novu postavu
+        </button>
+    <% end %>
+    <h3>Profil:</h3>
+    <div id="profile" class="jumbotron">
+      <p><%= @user.profile.description %></p>
+      <button>Edit</button>
+      <button style="display: none;">Save</button>
+      <button style="display: none;">Cancel</button>
     </div>
-<% end %>
+  </div>
 
+  <div id="characters" style="background-color: #99b058">
+    <h3>Zoznam postav:</h3>
+    <% @user.characters.each do |c| %>
+        <%= render partial: 'characters/character', locals: {character: c} %>
+    <% end %>
+  </div>
+
+  <% if current_user.id == @user.id %>
+      <div id="new-character" style="display: none;">
+        <h4>Ziadost o novu postavu:</h4>
+        <%= form_for :character, url: character_path, remote: true, html: {id: 'new-form'} do |f| %>
+
+            <%= f.label :meno %><br>
+            <%= f.text_field :name %><br>
+            <br>
+
+            <%= f.label :priezvisko %><br>
+            <%= f.text_field :surname %><br>
+            <br>
+
+            <%= f.label :popis %><br>
+            <%= f.text_area :description %><br>
+            <br>
+
+            <%= f.submit 'Odoslat', :class => "btn btn-default btn-circle btn-lg" %>
+
+        <% end %>
+        <button onclick="closeNewForm()" class="btn btn-default btn-circle btn-lg">Zrusit</button>
+      </div>
+  <% end %>
+  -->
+</div>
 
 <script>
+    function updateStatus() {
+        var status = $('#status_select').val();
+        console.log(status);
+        $.ajax({
+            type: 'PUT',
+            url: '/user/<%= @user.id %>',
+            data: {status: status}
+        });
+    }
+
+    <% if can_edit %>
+    $(document).ready(function () {
+        <%# TODO restric length for editable values %>
+        addEditableName();
+        addEditableStatus();
+    });
+
+    function addEditableName() {
+        var label = $('#display_name');
+        label.after('<input type ="text" style="display:none;" />');
+        var textbox = label.next();
+        textbox.val(label.html());
+        textbox.after('<br style="display:none;" />');
+
+        label.click(function () {
+            $(this).hide();
+            $(this).next().next().show();
+            $(this).next().show().focus();
+        });
+
+        textbox.focusout(function () {
+            var data = {};
+            data['display_name'] = this.value;
+
+            $.ajax({
+                data: data,
+                method: "PUT",
+                url: "/user/<%= @user.id %>"
+            });
+
+            $(this).hide();
+            $(this).next().hide();
+            $(this).prev().html(this.value);
+            $(this).prev().show();
+        });
+    }
+
+    function addEditableStatus() {
+        var label = $('#status_text');
+        label.after('<input type ="text" style="display:none;" />');
+        var textbox = label.next();
+        textbox.val('<%= @user.status_text %>');
+
+        label.click(function () {
+            $(this).hide();
+            $(this).next().show().focus();
+        });
+
+        textbox.focusout(function () {
+            var data = {};
+            data['status_text'] = this.value;
+
+            $.ajax({
+                data: data,
+                method: "PUT",
+                url: "/user/<%= @user.id %>"
+            });
+
+            $(this).hide();
+            if (this.value.length > 0) {
+                $(this).prev().html(this.value);
+            } else {
+                $(this).prev().html('(Pridaj vlastny status)');
+            }
+            $(this).prev().show();
+        });
+    }
+    <% end %>
+
+    <%# TODO copy scripts to new place %>
+
     function closeNewForm() {
         $("#new-form")[0].reset();
         $("#new-character").slideUp();

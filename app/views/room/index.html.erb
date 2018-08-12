@@ -5,7 +5,7 @@
   end
 %>
 <%# TODO update also all js responses %>
-<div class="chat_container col-lg-12 col-md-12 col-sm-12">
+<div class="page_container col-lg-12 col-md-12 col-sm-12">
   <audio src="<%= asset_path('roblox.mp3') %>"></audio>
   <div id="room_chat" class="col-lg-10 col-md-10 col-sm-12">
     <% unless actual_room.nil? %>
@@ -82,6 +82,10 @@
         if($('#message_' + message.id).length > 0){
           requestMessage(message.id)
         }
+    });
+
+    $(document).ready(function () {
+        addEditables();
     });
 
     function requestMessage(id) {

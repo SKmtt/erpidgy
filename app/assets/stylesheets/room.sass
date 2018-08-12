@@ -2,7 +2,7 @@
  * main chat window styles *
  * * * * * * * * * * * * * */
 
-.chat_container
+.page_container
   background-color: black
   height: 87vh
   border: 2px solid
@@ -241,17 +241,23 @@ a.reply_profile:visited, a.reply_character:focus
   right: 0
   bottom: 0
   background-color: rgba(0, 0, 0, 0.5)
-  z-index: 2
+  z-index: 1
 
 #overlay_content
   position: absolute
-  top: 27%
-  left: 40%
-  width: 25%
-  height: 22%
+  top: 20%
+  left: 25%
+  width: 50%
+  height: 50%
   padding: 2px 2px 2px 6px
   background: #e0e0e0 url(dark-grey-7.jpg)
   border: 3px solid black
   z-index: 1
-  bottom: 1800%
-  right: 25%
+
+.close_overlay
+  font-size: 25px
+  padding-right: 8px
+  color: #b18c5b
+  font-family: "Hamlet", serif
+  cursor: pointer
+
