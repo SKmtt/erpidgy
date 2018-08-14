@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def can_open?(room)
-    if room.is_open == 1 || UsersRoom.where(user_id: id, room_id: room).size > 0
+    if room.is_open == 1 || room.is_open == true || UsersRoom.where(user_id: id, room_id: room).size > 0
       return true
     end
     false

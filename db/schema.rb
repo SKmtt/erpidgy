@@ -53,15 +53,15 @@ ActiveRecord::Schema.define(version: 20180812142108) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.text    "name"
-    t.text    "description"
-    t.text    "resources_url"
-    t.text    "created_at",                   null: false
-    t.text    "updated_at",                   null: false
-    t.text    "parametrized"
-    t.integer "is_open"
-    t.integer "location_id"
-    t.boolean "is_active",     default: true
+    t.string   "name"
+    t.text     "description"
+    t.string   "resources_url"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "parametrized"
+    t.boolean  "is_open"
+    t.integer  "location_id"
+    t.boolean  "is_active",     default: true
     t.index ["location_id"], name: "index_rooms_on_location_id"
   end
 

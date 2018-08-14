@@ -45,9 +45,7 @@
 </div>
 
 <script>
-//    var dispatcher = new WebSocketRails('25.81.246.79:3000/websocket');
-    var dispatcher = new WebSocketRails('192.168.1.11:3000/websocket');
-//    var dispatcher = new WebSocketRails('127.0.0.1:3000/websocket');
+    var dispatcher = new WebSocketRails('<%= request.host %>:3000/websocket');
 
     dispatcher.on_open = function (data) {
         $("#onopen").text('connection open');
