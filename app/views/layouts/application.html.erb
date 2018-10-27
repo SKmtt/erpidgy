@@ -14,31 +14,35 @@
   
 <% if user_signed_in? %>
 
-      <% current_user.characters.each do |c| %>
-          <% if current_user.current_character_id == c.id %>
-              <%# TODO changed activeav id to class, change character id from plain id to something to work with %>
-              <%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image current_character', id: c.id) %>
-          <% else %>
-              <%# TODO do something with other characters %>
-              <!--<%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image', id: c.id) %>-->
-          <% end %>
-      <% end %>
 
-  <div class="panel col-lg-9 col-md-9 col-sm-12;" align= center>
+
+  <div class="panel col-lg-12 col-md-12 col-sm-12;" align= center>
       <button class="btn_basic btn_menu" onclick="location.href='/domov'">Domov</button>
       <%# TODO get full profile path from user model %>
-      <button class="btn_basic btn_menu" onclick="location.href='/users/<%= current_user.username %>'">Profil</button>
+    <button class="btn_basic btn_menu" onclick="location.href='/users/<%= current_user.username %>'">Profil</button>
       <button class="btn_basic btn_menu" onclick="location.href='/miestnosti'">RPG</button>
       <button class="btn_basic btn_menu" onclick="location.href=''">Mapa</button>
       <button class="btn_basic btn_menu" onclick="location.href=''">Zoznam</button>
       <button class="btn_basic btn_menu" onclick="location.href=''">Svet</button>
       <%# TODO add admin button %>
       <button class="btn_basic btn_menu" onclick="location.href='users/sign_out'">Odhlásenie</button>
-  </div>
+
+    <% current_user.characters.each do |c| %>
+      <% if current_user.current_character_id == c.id %>
+        <%# TODO changed activeav id to class, change character id from plain id to something to work with %>
+        <%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image current_character', id: c.id) %>
+      <% else %>
+        <%# TODO do something with other characters %>
+        <!--<%= image_tag(c.profile_image_path, title: c.full_name, alt: c.full_name, class: 'character_image', id: c.id) %>-->
+      <% end %>
       <%# TODO fix logout %>
       <a rel="nofollow" data-method="delete" href="<%= destroy_user_session_path %>" class="btn_basic btn_menu" role="button">
         Odhlasit </a>
-<% end %>
+    <% end %>
+  </div>
+
+  <% end %>
+
 
 <%= yield %>
   
